@@ -81,6 +81,7 @@ function App() {
             <Signup />
           </AuthLayout>
         } />
+         <Route path="/create" element={<CreateEvent />} />
 
         {/* Main Routes - With Navbar/Footer */}
         <Route path="/*" element={
@@ -91,7 +92,7 @@ function App() {
               <Route path="/event/:slug" element={<EventDetails />} />
               <Route path="/waitlist" element={<Waitlist />} />
               <Route path="/pricing" element={<Pricing />} />
-              <Route path="/create" element={<CreateEvent />} />
+             
 
 
               {/* Protected User Routes */}

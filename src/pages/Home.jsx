@@ -124,7 +124,7 @@ const featuredEvents = [
             <Link to="/events" className="btn-primary bg-green-500 rounded-full text-lg px-8 py-4">
               Browse Events
             </Link>
-            <Link to="/host" className="btn-secondary rounded-full text-lg px-8 py-4">
+            <Link to="/host" className="btn-secondary border border-green-500 rounded-full text-lg px-8 py-4">
               Create Event
             </Link>
           </motion.div>
@@ -132,7 +132,7 @@ const featuredEvents = [
 
         {/* Floating Elements */}
         <motion.div
-          className="absolute top-20 left-10 w-20 h-20 bg-accent-200 rounded-full opacity-20"
+          className="absolute top-20 left-10 w-20 h-20 bg-green-300 rounded-full opacity-20"
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 4, repeat: Infinity }}
         />
@@ -144,54 +144,12 @@ const featuredEvents = [
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-display font-bold text-charcoal-900 mb-4">
-              Why Choose PASA?
-            </h2>
-            <p className="text-xl text-charcoal-600 max-w-2xl mx-auto">
-              Everything you need to create unforgettable event experiences
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                className="card p-6 text-center"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="w-16 h-16 bg-accent-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="w-8 h-8 text-accent-500" />
-                </div>
-                <h3 className="font-semibold text-charcoal-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-charcoal-600 text-sm leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Featured Events */}
-     <section className="py-20 px-6">
+     <section className="py-12 px-6">
   <div className="max-w-6xl mx-auto">
     <motion.div
-      className="bg-green-200 rounded-3xl p-12"
+      className="bg-green-100 rounded-3xl p-12"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -204,10 +162,10 @@ const featuredEvents = [
         transition={{ duration: 0.6, delay: 0.2 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-4xl font-display font-bold text-white mb-4">
+        <h2 className="text-4xl font-display font-bold text-green-950 mb-4">
           Featured Events
         </h2>
-        <p className="text-xl text-white">
+        <p className="text-xl text-green-950">
           Discover amazing events happening near you
         </p>
       </motion.div>

@@ -150,12 +150,12 @@ const Navbar = () => {
                     </>
                   ) : (
                     <div className="flex items-center space-x-3">
-                      <Link to="/login" className="btn-secondary rounded-full text-sm">
+                      <Link to="/login" className="btn-secondary border border-green-500 rounded-full text-sm">
                         Login
                       </Link>
                       <button 
                         onClick={handleBookEventClick}
-                        className="btn-primary bg-green-500 rounded-full text-sm"
+                        className="btn-primary bg-yellow-500 rounded-full text-sm"
                       >
                         Get Started
                       </button>
@@ -178,7 +178,7 @@ const Navbar = () => {
             animate="visible"
             exit="hidden"
           >
-            <div className="glass rounded-full shadow-floating border border-white/20 backdrop-blur-xl">
+            <div className="glass rounded-full shadow-floating border border-green-800 backdrop-blur-xl">
               <div className="flex items-center justify-between px-4 py-3">
                 {/* Logo - Compact */}
                 <Link 
