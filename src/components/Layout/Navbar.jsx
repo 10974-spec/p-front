@@ -54,11 +54,6 @@ const Navbar = () => {
       y: 0, 
       opacity: 1,
       transition: { type: 'spring', stiffness: 300, damping: 30 }
-    },
-    compact: {
-      y: 0,
-      scale: 0.9,
-      transition: { type: 'spring', stiffness: 400, damping: 30 }
     }
   }
 
@@ -81,11 +76,11 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Main Navbar - Shows when not scrolled */}
+      {/* Main Navbar - Shows only on large devices when not scrolled */}
       <AnimatePresence>
         {!isScrolled && (
           <motion.nav
-            className="fixed top-4 left-0 right-0 mx-auto w-11/12 max-w-6xl z-50"
+            className="hidden lg:block fixed top-4 left-0 right-0 mx-auto w-11/12 max-w-6xl z-50"
             variants={navbarVariants}
             initial="hidden"
             animate="visible"
@@ -107,12 +102,12 @@ const Navbar = () => {
                 </Link>
 
                 {/* Search Bar - Desktop */}
-                <div className="hidden md:block flex-1 max-w-2xl mx-8">
+                <div className="flex-1 max-w-2xl mx-8">
                   <SearchBar />
                 </div>
 
                 {/* Navigation Links - Desktop */}
-                <div className="hidden md:flex items-center space-x-3">
+                <div className="flex items-center space-x-3">
                   {isAuthenticated ? (
                     <>
                       {user?.role === 'host' && (
@@ -167,30 +162,17 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-
-                {/* Mobile Menu Button */}
-                <button
-                  className="md:hidden glass p-2 rounded-xl border border-white/20"
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                  {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                </button>
-              </div>
-
-              {/* Mobile Search Bar */}
-              <div className="md:hidden px-6 pb-4">
-                <SearchBar />
               </div>
             </div>
           </motion.nav>
         )}
       </AnimatePresence>
 
-      {/* Compact Navbar - Shows when scrolled */}
+      {/* Compact Navbar - Shows on all devices when scrolled, and always on mobile */}
       <AnimatePresence>
-        {isScrolled && (
+        {(isScrolled || window.innerWidth < 1024) && (
           <motion.nav
-            className="fixed bottom-6 left-0 right-0 mx-auto rounded-full w-11/12 max-w-md z-50"
+            className="fixed bottom-6 left-0 right-0 mx-auto rounded-full w-11/12 max-w-md z-50 lg:w-11/12 lg:max-w-2xl"
             variants={compactNavbarVariants}
             initial="hidden"
             animate="visible"
@@ -206,7 +188,7 @@ const Navbar = () => {
                   {/* <img 
                     src="/src/assets/logo.png" 
                     alt="PASA Logo" 
-                    className="size-24 object-cover" 
+                    className="h-8 w-auto" 
                   /> */}
                 </Link>
 
@@ -217,7 +199,7 @@ const Navbar = () => {
                     <input
                       type="text"
                       placeholder="Search events..."
-                      className="w-full pl-10 pr-4 py-2 rounded-full border border-primary-300 focus:border-accent-500 focus:ring-2 focus:ring-accent-200 outline-none transition-all text-sm bg-white/50"
+                      className="w-full pl-10 pr-4 py-2 rounded-full border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-sm bg-white/50"
                       onClick={() => navigate('/events')}
                     />
                   </div>
@@ -252,6 +234,14 @@ const Navbar = () => {
                       Get Started
                     </button>
                   )}
+                  
+                  {/* Mobile Menu Button for Compact Nav */}
+                  <button
+                    className="p-2 rounded-full hover:bg-white/30 transition-colors lg:hidden"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  >
+                    <Menu className="w-4 h-4 text-charcoal-700" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -265,7 +255,7 @@ const Navbar = () => {
           <>
             {/* Backdrop */}
             <motion.div
-              className="fixed inset-0 bg-black/50 z-40 md:hidden"
+              className="fixed inset-0 bg-black/50 z-40 lg:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -274,12 +264,10 @@ const Navbar = () => {
             
             {/* Mobile Menu */}
             <motion.div
-              className={`fixed ${
-                isScrolled ? 'bottom-20' : 'top-24'
-              } left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-50 md:hidden`}
-              initial={{ opacity: 0, scale: 0.95, y: isScrolled ? 20 : -20 }}
+              className="fixed bottom-20 left-1/2 transform -translate-x-1/2 w-11/12 max-w-sm z-50 lg:hidden"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: isScrolled ? 20 : -20 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             >
               <div className="glass-dark rounded-2xl p-6 shadow-2xl border border-white/10 backdrop-blur-xl">
@@ -288,12 +276,12 @@ const Navbar = () => {
                     <>
                       {/* User Info */}
                       <div className="text-center mb-4 pb-4 border-b border-white/10">
-                        <div className="w-12 h-12 bg-accent-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
                           <User className="w-6 h-6 text-white" />
                         </div>
                         <p className="font-semibold text-white text-lg">{user?.name}</p>
                         <p className="text-primary-200 text-sm">{user?.email}</p>
-                        <p className="text-accent-300 text-xs mt-1 capitalize">{user?.role}</p>
+                        <p className="text-green-300 text-xs mt-1 capitalize">{user?.role}</p>
                       </div>
 
                       {/* Quick Actions Grid */}
@@ -353,7 +341,7 @@ const Navbar = () => {
                       </Link>
                       <button
                         onClick={handleBookEventClick}
-                        className="w-full bg-accent-500 text-white py-4 px-4 rounded-full hover:bg-accent-600 transition-colors text-center"
+                        className="w-full bg-green-500 text-white py-4 px-4 rounded-full hover:bg-green-600 transition-colors text-center"
                       >
                         Get Started
                       </button>
@@ -408,7 +396,7 @@ const Navbar = () => {
               <div className="space-y-3">
                 {/* Sign Up Button */}
                 <button
-                  className="w-full bg-green-500 hover:bg-success-600 text-white font-semibold py-4 px-6 rounded-full transition-all duration-200"
+                  className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-full transition-all duration-200"
                   onClick={handleSignUp}
                 >
                   Sign Up
@@ -416,7 +404,7 @@ const Navbar = () => {
 
                 {/* View Pricing Button */}
                 <button
-                  className="w-full border-2 border-success-500 text-success-500 hover:bg-success-50 font-semibold py-4 px-6 rounded-full transition-all duration-200"
+                  className="w-full border-2 border-green-500 text-green-500 hover:bg-green-50 font-semibold py-4 px-6 rounded-full transition-all duration-200"
                   onClick={handleViewPricing}
                 >
                   View Pricing
@@ -436,7 +424,7 @@ const Navbar = () => {
       </AnimatePresence>
 
       {/* Spacer to prevent content from going behind navbar */}
-      <div className={`${isScrolled ? 'pb-20' : 'pt-24'}`}></div>
+      <div className="pt-24 lg:pt-0"></div>
     </>
   )
 }
