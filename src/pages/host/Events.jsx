@@ -66,7 +66,7 @@ const HostEvents = () => {
   }
 
   return (
-    <div className="min-h-screen bg-primary-50 py-8">
+    <div className="min-h-screen bg-primary-50 py-8 mt-28">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -84,7 +84,7 @@ const HostEvents = () => {
             </p>
           </div>
           <Link
-            to="/host/events/create"
+            to="/create"
             className="btn-primary flex items-center space-x-2 mt-4 lg:mt-0"
           >
             <Plus className="w-4 h-4" />
