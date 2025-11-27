@@ -2,12 +2,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Search, Calendar, Ticket, Users, Star, ChevronLeft, ChevronRight, Menu, User } from 'lucide-react'
+import { Search, Calendar, Ticket, Users, Star, ChevronLeft, ChevronRight, Menu, User, Eye, X, MapPin, ArrowRight } from 'lucide-react'
 
 const Home = () => {
   const [activeEvent, setActiveEvent] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState(null)
 
   const featuredEvents = [
     {
@@ -19,7 +20,8 @@ const Home = () => {
       venue: { name: 'Central Park' },
       mainImage: '/src/assets/event1.jpeg',
       ticketTiers: [
-        { price: 5000, totalQty: 1000, remainingQty: 250 }
+        { name: 'General Admission', price: 5000 },
+        { name: 'VIP', price: 12000 }
       ],
       attendees: [
         '/src/assets/avatar1.jpeg',
@@ -27,7 +29,8 @@ const Home = () => {
         '/src/assets/avatar3.jpeg',
         '/src/assets/avatar4.jpeg'
       ],
-      totalAttendees: 1247
+      totalAttendees: 1247,
+      description: 'Join us for the biggest summer music festival featuring top artists and amazing performances.'
     },
     {
       id: 2,
@@ -38,14 +41,16 @@ const Home = () => {
       venue: { name: 'Convention Center' },
       mainImage: '/src/assets/event2.jpeg',
       ticketTiers: [
-        { price: 7500, totalQty: 500, remainingQty: 150 }
+        { name: 'Standard', price: 7500 },
+        { name: 'Premium', price: 15000 }
       ],
       attendees: [
         '/src/assets/avatar1.jpeg',
         '/src/assets/avatar2.jpeg',
         '/src/assets/avatar3.jpeg'
       ],
-      totalAttendees: 387
+      totalAttendees: 387,
+      description: 'Explore the latest in technology and innovation with industry leaders and pioneers.'
     },
     {
       id: 3,
@@ -56,7 +61,8 @@ const Home = () => {
       venue: { name: 'Art Gallery Downtown' },
       mainImage: '/src/assets/event3.jpeg',
       ticketTiers: [
-        { price: 3000, totalQty: 200, remainingQty: 75 }
+        { name: 'General', price: 3000 },
+        { name: 'Student', price: 1500 }
       ],
       attendees: [
         '/src/assets/avatar2.jpeg',
@@ -64,7 +70,28 @@ const Home = () => {
         '/src/assets/avatar4.jpeg',
         '/src/assets/avatar1.jpeg'
       ],
-      totalAttendees: 892
+      totalAttendees: 892,
+      description: 'Experience contemporary art from emerging and established artists in a stunning gallery setting.'
+    },
+    {
+      id: 4,
+      slug: 'food-festival',
+      title: 'International Food Festival',
+      category: 'Food & Drink',
+      dateStart: '2024-10-05T12:00:00Z',
+      venue: { name: 'Waterfront Park' },
+      mainImage: '/src/assets/event1.jpeg',
+      ticketTiers: [
+        { name: 'Tasting Pass', price: 4500 },
+        { name: 'VIP Experience', price: 9000 }
+      ],
+      attendees: [
+        '/src/assets/avatar1.jpeg',
+        '/src/assets/avatar2.jpeg',
+        '/src/assets/avatar3.jpeg'
+      ],
+      totalAttendees: 567,
+      description: 'Taste culinary delights from around the world in this vibrant food celebration.'
     }
   ]
 
@@ -117,6 +144,39 @@ const Home = () => {
     setIsAutoPlaying(false)
   }
 
+  // Handle modal state with localStorage
+  const handleModalOpen = () => {
+    localStorage.setItem('isModalOpen', 'true')
+    window.dispatchEvent(new Event('storage'))
+  }
+
+  const handleModalClose = () => {
+    localStorage.setItem('isModalOpen', 'false')
+    window.dispatchEvent(new Event('storage'))
+  }
+
+  const handleEventClick = (event) => {
+    setSelectedEvent(event)
+    handleModalOpen()
+  }
+
+  const handleCloseModal = () => {
+    setSelectedEvent(null)
+    handleModalClose()
+  }
+
+  // Close modal on escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && selectedEvent) {
+        handleCloseModal()
+      }
+    }
+
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [selectedEvent])
+
   return (
     <div className="min-h-screen">
       {/* Fixed Mobile Navigation */}
@@ -141,13 +201,9 @@ const Home = () => {
 
             {/* Right: User Icon or Get Started */}
             <div className="flex items-center space-x-2">
-              {/* If logged in - show user icon */}
-              {/* <User className="w-6 h-6 text-charcoal-700" /> */}
-              
-              {/* If not logged in - show Get Started button */}
               <Link 
                 to="/signup" 
-                className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-green-600 transition-all duration-300"
+                className="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-green-600 transition-all duration-300"
               >
                 Get Started
               </Link>
@@ -181,7 +237,7 @@ const Home = () => {
                   </Link>
                   <Link 
                     to="/signup" 
-                    className="block px-4 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transition-all duration-200"
+                    className="block px-4 py-3 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all duration-200"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sign Up
@@ -206,12 +262,12 @@ const Home = () => {
           </AnimatePresence>
         </div>
       </section>
-
-      {/* Hero Section - Reduced padding-top */}
+       
+      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6 pt-12 lg:pt-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-100 via-primary-50 to-accent-50" />
         
-        {/* Mobile Carousel - Only on mobile */}
+        {/* Mobile Carousel */}
         <div className="lg:hidden w-full max-w-4xl relative z-10">
           <div className="relative h-[75vh] flex items-center justify-center">
             <AnimatePresence mode="wait">
@@ -225,9 +281,7 @@ const Home = () => {
                     exit={{ opacity: 0, scale: 1.2 }}
                     transition={{ duration: 0.5 }}
                   >
-                    {/* Event Card */}
                     <div className="relative w-full max-w-sm">
-                      {/* Main Event Image */}
                       <motion.div
                         className="relative rounded-3xl overflow-hidden shadow-2xl"
                         whileHover={{ scale: 1.02 }}
@@ -238,11 +292,7 @@ const Home = () => {
                           alt={event.title}
                           className="w-full h-96 object-cover"
                         />
-                        
-                        {/* Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                        
-                        {/* Event Info */}
                         <div className="absolute bottom-4 left-4 right-4 text-white">
                           <h3 className="text-xl font-bold mb-2 line-clamp-2">
                             {event.title}
@@ -254,13 +304,11 @@ const Home = () => {
                                 {new Date(event.dateStart).toLocaleDateString()}
                               </span>
                             </div>
-                            <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                               ${(event.ticketTiers[0].price / 100).toFixed(2)}
                             </span>
                           </div>
                         </div>
-
-                        {/* Attendees Stack */}
                         <div className="absolute top-4 left-4">
                           <div className="flex items-center">
                             <div className="flex -space-x-2">
@@ -282,7 +330,6 @@ const Home = () => {
                         </div>
                       </motion.div>
 
-                      {/* Get Tickets Button */}
                       <motion.div
                         className="mt-4"
                         initial={{ opacity: 0, y: 20 }}
@@ -291,14 +338,13 @@ const Home = () => {
                       >
                         <Link
                           to={`/events/${event.slug}`}
-                          className="btn-primary bg-green-500 w-full py-4 rounded-full text-lg font-semibold flex items-center justify-center space-x-2"
+                          className="btn-primary bg-red-500 w-full py-4 rounded-full text-lg font-semibold flex items-center justify-center space-x-2"
                         >
                           <span>Get Tickets</span>
                           <Ticket className="w-5 h-5" />
                         </Link>
                       </motion.div>
 
-                      {/* View All Events Button - Moved below Get Tickets */}
                       <motion.div
                         className="mt-4"
                         initial={{ opacity: 0, y: 20 }}
@@ -307,7 +353,7 @@ const Home = () => {
                       >
                         <Link 
                           to="/events" 
-                          className="inline-flex items-center justify-center space-x-2 bg-white/80 backdrop-blur-sm text-green-600 w-full px-6 py-3 rounded-full font-semibold hover:bg-white hover:shadow-lg transition-all duration-300 border border-green-200"
+                          className="inline-flex items-center justify-center space-x-2 bg-white/80 backdrop-blur-sm text-red-600 w-full px-6 py-3 rounded-full font-semibold hover:bg-white hover:shadow-lg transition-all duration-300 border border-green-200"
                         >
                           <span>View All Events</span>
                           <Calendar className="w-4 h-4" />
@@ -319,7 +365,6 @@ const Home = () => {
               ))}
             </AnimatePresence>
 
-            {/* Navigation Arrows */}
             <button
               onClick={prevEvent}
               className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center shadow-lg z-20"
@@ -333,14 +378,13 @@ const Home = () => {
               <ChevronRight className="w-6 h-6 text-charcoal-700" />
             </button>
 
-            {/* Dots Indicator */}
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
               {featuredEvents.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToEvent(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === activeEvent ? 'bg-green-500 scale-125' : 'bg-white/60'
+                    index === activeEvent ? 'bg-red-500 scale-125' : 'bg-white/60'
                   }`}
                 />
               ))}
@@ -348,8 +392,13 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Desktop Hero (Original - Unchanged) */}
+        {/* Desktop Hero */}
         <div className="hidden lg:block relative z-10 text-center max-w-4xl">
+          <img 
+            src="/src/assets/bg1.png" 
+            alt="PASA Logo" 
+            className="size-14 mt-11 " 
+          />
           <motion.h1
             className="text-5xl md:text-7xl font-display font-bold text-charcoal-900 mb-6"
             initial={{ opacity: 0, y: 30 }}
@@ -357,7 +406,7 @@ const Home = () => {
             transition={{ duration: 0.8 }}
           >
             Create, share, and sell tickets —{' '}
-            <span className="text-green-500">all in one link.</span>
+            <span className="text-red-500">all in one link.</span>
           </motion.h1>
           
           <motion.p
@@ -368,8 +417,7 @@ const Home = () => {
           >
             The next-generation event ticketing platform for creators and attendees.
           </motion.p>
-
-          {/* Floating Search Bar */}
+          
           <motion.div
             className="max-w-2xl mx-auto mb-8"
             initial={{ opacity: 0, y: 30 }}
@@ -385,48 +433,35 @@ const Home = () => {
                     <p className="text-sm text-charcoal-500">Search by location, date, or category</p>
                   </div>
                 </div>
-                <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center">
                   <Search className="w-5 h-5 text-white" />
                 </div>
               </div>
             </div>
           </motion.div>
-
+          
           <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Link to="/events" className="btn-primary bg-green-500 rounded-full text-lg px-8 py-4">
+            <Link to="/events" className="btn-primary bg-red-500 rounded-full text-lg px-8 py-4">
               Browse Events
             </Link>
-            <Link to="/host" className="btn-secondary border border-green-500 rounded-full text-lg px-8 py-4">
+            <Link to="/host" className="btn-secondary border border-red-500 rounded-full text-lg px-8 py-4">
               Create Event
             </Link>
           </motion.div>
         </div>
-
-        {/* Floating Elements */}
-        <motion.div
-          className="absolute top-20 left-10 w-20 h-20 bg-green-300 rounded-full opacity-20"
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 4, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute bottom-20 right-10 w-16 h-16 bg-primary-300 rounded-full opacity-30"
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-        />
       </section>
 
-      {/* Desktop Only Sections - Hidden on mobile */}
+      {/* Desktop Only Sections */}
       <div className="hidden lg:block">
-        {/* Featured Events Section */}
         <section className="py-12 px-6">
           <div className="max-w-6xl mx-auto">
             <motion.div
-              className="bg-green-100 rounded-3xl p-12"
+              className="rounded-3xl p-8"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -439,79 +474,100 @@ const Home = () => {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl font-display font-bold text-green-950 mb-4">
+                <h2 className="text-4xl font-display font-bold text-black mb-4">
                   Featured Events
                 </h2>
-                <p className="text-xl text-green-950">
+                <p className="text-xl text-black">
                   Discover amazing events happening near you
                 </p>
               </motion.div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {featuredEvents.map((event, index) => (
+              <motion.div
+                className="relative mb-16"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <div className="relative overflow-hidden rounded-2xl">
+                  <div className="relative w-full h-[500px] overflow-hidden">
+                    <img
+                      src={featuredEvents[0].mainImage}
+                      alt={featuredEvents[0].title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.src = '/assets/fallback-event.jpg';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+                  </div>
+                  
+                  <div className="absolute inset-0 flex items-end p-8 text-white">
+                    <div className="max-w-2xl">
+                      <h3 className="text-4xl font-display font-bold mb-4 leading-tight">
+                        {featuredEvents[0].title}
+                      </h3>
+                      <div className="flex items-center gap-6 mb-4 text-lg flex-wrap">
+                        <div className="flex items-center gap-2 bg-black/30 px-3 py-1 rounded-full">
+                          <Calendar className="w-5 h-5" />
+                          <span>{new Date(featuredEvents[0].dateStart).toLocaleDateString()}</span>
+                        </div>
+                        <div className="flex items-center gap-2 bg-black/30 px-3 py-1 rounded-full">
+                          <MapPin className="w-5 h-5" />
+                          <span>{featuredEvents[0].venue.name}</span>
+                        </div>
+                        <div className="bg-accent-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+                          {featuredEvents[0].category}
+                        </div>
+                      </div>
+                      <p className="text-2xl font-bold text-accent-300 mb-6">
+                        From ${(featuredEvents[0].ticketTiers[0].price / 100).toFixed(2)}
+                      </p>
+                      <Link
+                        to={`/events/${featuredEvents[0].slug}`}
+                        className="bg-white text-red-500 rounded-full px-8 py-4 text-lg font-semibold inline-flex items-center space-x-2 hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl"
+                      >
+                        <span>Get Tickets</span>
+                        <ArrowRight className="w-5 h-5" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {featuredEvents.slice(1, 4).map((event, index) => (
                   <motion.div
                     key={event.id}
-                    className="group relative"
+                    className="group relative cursor-pointer"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     viewport={{ once: true }}
+                    onClick={() => handleEventClick(event)}
                   >
-                    {/* Event Image */}
-                    <div className="relative overflow-hidden rounded-2xl mb-4">
+                    <div className="relative overflow-hidden rounded-2xl aspect-[4/5]">
                       <img
                         src={event.mainImage}
                         alt={event.title}
-                        className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                        onError={(e) => {
+                          e.target.src = '/assets/fallback-event.jpg';
+                        }}
                       />
-                    </div>
-
-                    {/* Details Card - Appears on hover */}
-                    <motion.div
-                      className="absolute inset-x-0 bottom-0 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-white/20 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-10"
-                      initial={false}
-                    >
-                      <h3 className="font-semibold text-charcoal-900 text-lg mb-2 line-clamp-2">
-                        {event.title}
-                      </h3>
-                      <div className="space-y-2 text-sm text-charcoal-600">
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">Category:</span>
-                          <span className="bg-accent-100 text-accent-700 px-2 py-1 rounded-full text-xs">
-                            {event.category}
-                          </span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">Date:</span>
-                          <span>{new Date(event.dateStart).toLocaleDateString()}</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">Venue:</span>
-                          <span className="text-right">{event.venue.name}</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">Price:</span>
-                          <span className="font-bold text-accent-600">
-                            ${(event.ticketTiers[0].price / 100).toFixed(2)}
-                          </span>
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-300 flex items-center justify-center">
+                        <div className="transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 text-center">
+                          <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 mb-4 inline-block">
+                            <Eye className="w-8 h-8 text-white" />
+                          </div>
+                          <p className="text-white font-semibold text-lg">View Details</p>
                         </div>
                       </div>
-                      <Link
-                        to={`/events/${event.slug}`}
-                        className="btn-primary bg-green-500 w-full mt-8 py-2 text-sm"
-                      >
-                        View Details
-                      </Link>
-                    </motion.div>
-
-                    {/* Static minimal info (always visible) */}
-                    <div className="text-center">
-                      <h3 className="font-semibold text-charcoal-900 text-lg mb-1 line-clamp-2">
-                        {event.title}
-                      </h3>
-                      <p className="text-accent-600 font-medium">
-                        ${(event.ticketTiers[0].price / 100).toFixed(2)}
-                      </p>
+                      <div className="absolute top-4 left-4">
+                        <span className="bg-accent-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                          {event.category}
+                        </span>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
@@ -524,15 +580,18 @@ const Home = () => {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                <Link to="/events" className="btn-primary bg-green-500 rounded-full">
-                  View All Events
+                <Link 
+                  to="/events" 
+                  className="bg-red-500 text-white rounded-full px-8 py-4 text-lg font-semibold inline-flex items-center space-x-2 hover:bg-red-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  <span>View All Events</span>
+                  <ArrowRight className="w-5 h-5" />
                 </Link>
               </motion.div>
             </motion.div>
           </div>
         </section>
 
-        {/* Features Section */}
         <section className="py-16 px-6 bg-primary-50">
           <div className="max-w-6xl mx-auto">
             <motion.div
@@ -560,7 +619,7 @@ const Home = () => {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                     <feature.icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold text-charcoal-900 mb-2">
@@ -575,8 +634,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-16 px-6 bg-gray-900">
+        <section className="py-16 px-6 bg-red-500 m-8 rounded-full">
           <div className="max-w-4xl mx-auto text-center">
             <motion.h2
               className="text-4xl font-display font-bold text-white mb-6"
@@ -604,15 +662,101 @@ const Home = () => {
             >
               <Link
                 to="/host"
-                className="bg-white text-green-500 rounded-full px-8 py-4 text-lg font-semibold inline-flex items-center space-x-2 hover:bg-primary-50 transition-all duration-300"
+                className="bg-white text-red-500 rounded-full px-8 py-4 text-lg font-semibold inline-flex items-center space-x-2 hover:bg-primary-50 transition-all duration-300"
               >
                 <span>Start Creating</span>
-                <Calendar className="w-5 h-5" />
               </Link>
             </motion.div>
           </div>
         </section>
       </div>
+
+      {/* Modal for Event Details */}
+      <AnimatePresence>
+        {selectedEvent && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleCloseModal}
+          >
+            <motion.div
+              className="bg-white rounded-3xl max-w-md w-full overflow-hidden"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="relative h-48">
+                <img
+                  src={selectedEvent.mainImage}
+                  alt={selectedEvent.title}
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  onClick={handleCloseModal}
+                  className="absolute top-4 right-4 bg-black/50 text-white rounded-full p-2 hover:bg-black/70 transition-all duration-300"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6">
+                <h3 className="text-2xl font-display font-bold text-charcoal-900 mb-3">
+                  {selectedEvent.title}
+                </h3>
+                
+                <div className="space-y-3 mb-4">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-accent-500" />
+                    <span className="text-sm">{new Date(selectedEvent.dateStart).toLocaleDateString()}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-accent-500" />
+                    <span className="text-sm">{selectedEvent.venue.name}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="bg-accent-100 text-accent-700 px-2 py-1 rounded-full text-xs font-medium">
+                      {selectedEvent.category}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                  <h4 className="font-semibold text-sm mb-2">Ticket Prices</h4>
+                  <div className="space-y-1">
+                    {selectedEvent.ticketTiers.map((tier, index) => (
+                      <div key={index} className="flex justify-between items-center text-sm">
+                        <span>{tier.name}</span>
+                        <span className="font-bold text-accent-600">
+                          ${(tier.price / 100).toFixed(2)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  <Link
+                    to={`/events/${selectedEvent.slug}`}
+                    className="flex-1 bg-red-500 text-white text-center rounded-full px-4 py-2 text-sm font-semibold hover:bg-red-600 transition-all duration-300"
+                    onClick={handleCloseModal}
+                  >
+                    View Full Details
+                  </Link>
+                  <button
+                    onClick={handleCloseModal}
+                    className="flex-1 bg-gray-200 text-gray-700 text-center rounded-full px-4 py-2 text-sm font-semibold hover:bg-gray-300 transition-all duration-300"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

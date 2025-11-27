@@ -114,7 +114,7 @@ const Signup = () => {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-lg"
+                  className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-lg"
                   placeholder="Enter your full name"
                   autoFocus
                 />
@@ -124,7 +124,7 @@ const Signup = () => {
                     animate={{ scale: 1 }}
                     className="absolute right-4 top-1/2 transform -translate-y-1/2"
                   >
-                    <Check className="w-5 h-5 text-green-500" />
+                    <Check className="w-5 h-5 text-red-500" />
                   </motion.div>
                 )}
               </div>
@@ -153,7 +153,7 @@ const Signup = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-lg"
+                  className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-lg"
                   placeholder="Enter your email"
                   autoFocus
                 />
@@ -163,7 +163,7 @@ const Signup = () => {
                     animate={{ scale: 1 }}
                     className="absolute right-4 top-1/2 transform -translate-y-1/2"
                   >
-                    <Check className="w-5 h-5 text-green-500" />
+                    <Check className="w-5 h-5 text-red-500" />
                   </motion.div>
                 )}
               </div>
@@ -175,7 +175,7 @@ const Signup = () => {
                   type="tel"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-lg"
+                  className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-lg"
                   placeholder="Phone number (optional)"
                 />
               </div>
@@ -204,7 +204,7 @@ const Signup = () => {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full pl-12 pr-12 py-4 rounded-full border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-lg"
+                  className="w-full pl-12 pr-12 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-lg"
                   placeholder="Create a secure password"
                   autoFocus
                 />
@@ -221,7 +221,7 @@ const Signup = () => {
                     animate={{ scale: 1 }}
                     className="absolute right-4 top-1/2 transform -translate-y-1/2"
                   >
-                    <Check className="w-5 h-5 text-green-500" />
+                    <Check className="w-5 h-5 text-red-500" />
                   </motion.div>
                 )}
               </div>
@@ -247,7 +247,7 @@ const Signup = () => {
             <div className="space-y-4">
               <label className={`flex items-center p-6 rounded-2xl border-2 cursor-pointer transition-all ${
                 formData.role === 'buyer' 
-                  ? 'border-green-500 bg-green-50' 
+                  ? 'border-red-500 bg-red-50' 
                   : 'border-primary-300 hover:border-primary-400'
               }`}>
                 <input
@@ -260,7 +260,7 @@ const Signup = () => {
                 />
                 <div className={`w-6 h-6 rounded-full border-2 mr-4 flex items-center justify-center ${
                   formData.role === 'buyer' 
-                    ? 'border-green-500 bg-green-500' 
+                    ? 'border-red-500 bg-red-500' 
                     : 'border-primary-400'
                 }`}>
                   {formData.role === 'buyer' && <Check className="w-3 h-3 text-white" />}
@@ -274,7 +274,7 @@ const Signup = () => {
               
               <label className={`flex items-center p-6 rounded-2xl border-2 cursor-pointer transition-all ${
                 formData.role === 'host' 
-                  ? 'border-green-500 bg-green-50' 
+                  ? 'border-red-500 bg-red-50' 
                   : 'border-primary-300 hover:border-primary-400'
               }`}>
                 <input
@@ -287,7 +287,7 @@ const Signup = () => {
                 />
                 <div className={`w-6 h-6 rounded-full border-2 mr-4 flex items-center justify-center ${
                   formData.role === 'host' 
-                    ? 'border-green-500 bg-green-500' 
+                    ? 'border-red-500 bg-red-500' 
                     : 'border-primary-400'
                 }`}>
                   {formData.role === 'host' && <Check className="w-3 h-3 text-white" />}
@@ -313,7 +313,7 @@ const Signup = () => {
                     type="text"
                     value={formData.businessName}
                     onChange={handleChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-lg"
+                    className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-lg"
                     placeholder="Business/organization name"
                   />
                 </div>
@@ -326,7 +326,7 @@ const Signup = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-4">
-              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-display font-bold text-charcoal-900 mb-2">
@@ -337,8 +337,8 @@ const Signup = () => {
               </p>
             </div>
 
-            <div className="bg-green-50 rounded-2xl p-4">
-              <div className="text-sm text-green-800 text-center">
+            <div className="bg-red-50 rounded-2xl p-4">
+              <div className="text-sm text-red-800 text-center">
                 By creating an account, you agree to our{' '}
                 <Link to="/terms" className="font-semibold hover:underline">Terms</Link> and{' '}
                 <Link to="/privacy" className="font-semibold hover:underline">Privacy Policy</Link>
@@ -377,13 +377,13 @@ const Signup = () => {
             <span className="text-sm font-medium text-charcoal-700">
               Step {currentStep} of {steps.length}
             </span>
-            <span className="text-sm font-medium text-green-600">
+            <span className="text-sm font-medium text-red-600">
               {Math.round(progressPercentage)}% Complete
             </span>
           </div>
           <div className="w-full bg-primary-200 rounded-full h-2">
             <motion.div
-              className="bg-green-500 h-2 rounded-full"
+              className="bg-red-500 h-2 rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${progressPercentage}%` }}
               transition={{ duration: 0.5, ease: "easeOut" }}
@@ -398,9 +398,9 @@ const Signup = () => {
               <div className="flex flex-col items-center">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
                   completedSteps.has(step.number) || currentStep > step.number
-                    ? 'bg-green-500 text-white'
+                    ? 'bg-red-500 text-white'
                     : currentStep === step.number
-                    ? 'bg-green-100 border-2 border-green-500 text-green-600'
+                    ? 'bg-red-100 border-2 border-red-500 text-red-600'
                     : 'bg-primary-200 text-charcoal-600'
                 }`}>
                   {completedSteps.has(step.number) || currentStep > step.number ? (
@@ -411,7 +411,7 @@ const Signup = () => {
                 </div>
                 <span className={`text-xs mt-2 hidden sm:block ${
                   completedSteps.has(step.number) || currentStep >= step.number
-                    ? 'text-green-600 font-medium'
+                    ? 'text-red-600 font-medium'
                     : 'text-charcoal-500'
                 }`}>
                   {step.title}
@@ -420,7 +420,7 @@ const Signup = () => {
               {index < steps.length - 1 && (
                 <div className={`flex-1 h-1 mx-2 transition-all ${
                   completedSteps.has(step.number + 1) || currentStep > step.number
-                    ? 'bg-green-500'
+                    ? 'bg-red-500'
                     : 'bg-primary-200'
                 }`} />
               )}
@@ -464,7 +464,7 @@ const Signup = () => {
               <button
                 type="button"
                 onClick={prevStep}
-                className="flex-1 bg-white border-2 border-green-500 text-green-500 hover:bg-green-50 rounded-full py-4 flex items-center justify-center space-x-2 transition-all duration-200 font-semibold"
+                className="flex-1 bg-white border-2 border-red-500 text-red-500 hover:bg-red-50 rounded-full py-4 flex items-center justify-center space-x-2 transition-all duration-200 font-semibold"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -476,7 +476,7 @@ const Signup = () => {
               disabled={!isStepValid() || loading}
               className={`flex-1 rounded-full py-4 font-semibold transition-all flex items-center justify-center space-x-2 ${
                 isStepValid() && !loading
-                  ? 'bg-green-500 hover:bg-green-600 text-white transform hover:scale-105'
+                  ? 'bg-red-500 hover:bg-red-600 text-white transform hover:scale-105'
                   : 'bg-primary-200 text-charcoal-400 cursor-not-allowed'
               }`}
             >
@@ -493,7 +493,7 @@ const Signup = () => {
               <span className="text-charcoal-600">Already have an account? </span>
               <Link
                 to="/login"
-                className="text-green-500 hover:text-green-600 font-medium transition-colors"
+                className="text-red-500 hover:text-red-600 font-medium transition-colors"
               >
                 Sign in
               </Link>

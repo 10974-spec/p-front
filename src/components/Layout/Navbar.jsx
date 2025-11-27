@@ -11,6 +11,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [showPricingModal, setShowPricingModal] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { isAuthenticated, user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -20,8 +21,22 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 100)
     }
 
+    // Listen for storage changes (modal state)
+    const handleStorageChange = () => {
+      const modalState = localStorage.getItem('isModalOpen')
+      setIsModalOpen(modalState === 'true')
+    }
+
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('storage', handleStorageChange)
+    
+    // Initial check
+    handleStorageChange()
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   const handleLogout = () => {
@@ -74,11 +89,15 @@ const Navbar = () => {
     { icon: Scan, label: 'Scan', path: '/host/scanner' },
   ]
 
+  // Determine if compact navbar should be visible
+  const shouldShowCompactNavbar = (isScrolled || window.innerWidth < 1024) && !isModalOpen
+  const shouldShowMainNavbar = !isScrolled && !isModalOpen
+
   return (
     <>
       {/* Main Navbar - Shows only on large devices when not scrolled */}
       <AnimatePresence>
-        {!isScrolled && (
+        {shouldShowMainNavbar && (
           <motion.nav
             className="hidden lg:block fixed top-4 left-0 right-0 mx-auto w-11/12 max-w-6xl z-50"
             variants={navbarVariants}
@@ -94,11 +113,11 @@ const Navbar = () => {
                   className="flex items-center flex-shrink-0 p-0 m-0"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {/* <img 
-                    src="/src/assets/logo.png" 
+                  <img 
+                    src="/src/assets/logo2.png" 
                     alt="PASA Logo" 
                     className="size-24 object-cover" 
-                  /> */}
+                  />
                 </Link>
 
                 {/* Search Bar - Desktop */}
@@ -120,11 +139,11 @@ const Navbar = () => {
                         </Link>
                       )}
                       <Link 
-                        to="/events" 
-                        className="btn-primary bg-green-500 rounded-full text-sm"
-                      >
-                        Book Event
-                      </Link>
+                          to="/events" 
+                          className="btn-primary bg-red-500 rounded-full text-sm"
+                        >
+                          Book Event
+                        </Link>
                       <div className="relative group">
                         <button className="flex items-center space-x-2 glass px-4 py-2 rounded-xl min-w-0">
                           <User className="w-4 h-4 flex-shrink-0" />
@@ -150,12 +169,12 @@ const Navbar = () => {
                     </>
                   ) : (
                     <div className="flex items-center space-x-3">
-                      <Link to="/login" className="btn-secondary border border-green-500 rounded-full text-sm">
+                      <Link to="/login" className="btn-secondary border border-red-500 rounded-full text-sm">
                         Login
                       </Link>
                       <button 
                         onClick={handleBookEventClick}
-                        className="btn-primary bg-yellow-500 rounded-full text-sm"
+                        className="btn-primary bg-red-500 rounded-full text-sm"
                       >
                         Get Started
                       </button>
@@ -168,9 +187,9 @@ const Navbar = () => {
         )}
       </AnimatePresence>
 
-      {/* Compact Navbar - Shows on all devices when scrolled, and always on mobile */}
+      {/* Compact Navbar - Shows on all devices when scrolled, and always on mobile, but hides when modal is open */}
       <AnimatePresence>
-        {(isScrolled || window.innerWidth < 1024) && (
+        {shouldShowCompactNavbar && (
           <motion.nav
             className="fixed bottom-6 left-0 right-0 mx-auto rounded-full w-11/12 max-w-md z-50 lg:w-11/12 lg:max-w-2xl"
             variants={compactNavbarVariants}
@@ -178,18 +197,18 @@ const Navbar = () => {
             animate="visible"
             exit="hidden"
           >
-            <div className="glass rounded-full shadow-floating border border-green-800 backdrop-blur-xl">
+            <div className="glass rounded-full shadow-floating border border-red-800 backdrop-blur-xl">
               <div className="flex items-center justify-between px-4 py-3">
                 {/* Logo - Compact */}
                 <Link 
                   to="/" 
                   className="flex items-center space-x-2 flex-shrink-0"
                 >
-                  {/* <img 
-                    src="/src/assets/logo.png" 
+                  <img 
+                    src="/src/assets/logo2.png" 
                     alt="PASA Logo" 
-                    className="h-8 w-auto" 
-                  /> */}
+                    className="size-14" 
+                  />
                 </Link>
 
                 {/* Search Bar - Compact */}
@@ -228,7 +247,7 @@ const Navbar = () => {
                     </Link>
                   ) : (
                     <button
-                      className="bg-green-500 text-white px-3 py-2 rounded-full text-sm font-semibold hover:bg-green-600 transition-colors"
+                      className="bg-red-500 text-white px-3 py-2 rounded-full text-sm font-semibold hover:bg-red-600 transition-colors"
                       onClick={handleBookEventClick}
                     >
                       Get Started
@@ -276,7 +295,7 @@ const Navbar = () => {
                     <>
                       {/* User Info */}
                       <div className="text-center mb-4 pb-4 border-b border-white/10">
-                        <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-3">
                           <User className="w-6 h-6 text-white" />
                         </div>
                         <p className="font-semibold text-white text-lg">{user?.name}</p>
@@ -341,7 +360,7 @@ const Navbar = () => {
                       </Link>
                       <button
                         onClick={handleBookEventClick}
-                        className="w-full bg-green-500 text-white py-4 px-4 rounded-full hover:bg-green-600 transition-colors text-center"
+                        className="w-full bg-red-500 text-white py-4 px-4 rounded-full hover:bg-red-600 transition-colors text-center"
                       >
                         Get Started
                       </button>
@@ -396,7 +415,7 @@ const Navbar = () => {
               <div className="space-y-3">
                 {/* Sign Up Button */}
                 <button
-                  className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-6 rounded-full transition-all duration-200"
+                  className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-4 px-6 rounded-full transition-all duration-200"
                   onClick={handleSignUp}
                 >
                   Sign Up
@@ -404,7 +423,7 @@ const Navbar = () => {
 
                 {/* View Pricing Button */}
                 <button
-                  className="w-full border-2 border-green-500 text-green-500 hover:bg-green-50 font-semibold py-4 px-6 rounded-full transition-all duration-200"
+                  className="w-full border-2 border-red-500 text-red-500 hover:bg-green-50 font-semibold py-4 px-6 rounded-full transition-all duration-200"
                   onClick={handleViewPricing}
                 >
                   View Pricing

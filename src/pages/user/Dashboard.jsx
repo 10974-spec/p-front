@@ -47,7 +47,7 @@ const Dashboard = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-primary-50 py-8">
+    <div className="min-h-screen mt-24 bg-primary-50 py-8">
       <div className="max-w-6xl mx-auto px-6">
         {/* Welcome Section */}
         <motion.div

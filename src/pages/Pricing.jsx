@@ -117,10 +117,10 @@ const Pricing = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-primary-50">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-primary-50">
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent"></div>
         <div className="max-w-6xl mx-auto relative">
           <motion.div
             className="text-center mb-16"
@@ -128,13 +128,13 @@ const Pricing = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <div className="inline-flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <div className="inline-flex items-center space-x-2 bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Star className="w-4 h-4" />
               <span>Transparent Pricing</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-display font-bold text-charcoal-900 mb-6 leading-tight">
               Fair Pricing for
-              <span className="text-green-600"> African Creators</span>
+              <span className="text-red-600"> African Creators</span>
             </h1>
             <p className="text-xl md:text-2xl text-charcoal-600 mb-8 max-w-3xl mx-auto leading-relaxed">
               You keep 100% of your ticket price. We only charge a small service fee when you make sales.
@@ -151,9 +151,9 @@ const Pricing = () => {
             {valueProps.map((prop, index) => (
               <div
                 key={prop.title}
-                className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-green-100 shadow-sm hover:shadow-md transition-all duration-300"
+                className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-red-100 shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center mb-4">
                   <prop.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-semibold text-charcoal-900 mb-2 text-lg">
@@ -188,14 +188,14 @@ const Pricing = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Calculator Inputs */}
             <motion.div
-              className="lg:col-span-2 bg-white rounded-3xl p-8 shadow-soft border border-green-100"
+              className="lg:col-span-2 bg-white rounded-3xl p-8 shadow-soft border border-red-100"
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
               <div className="flex items-center space-x-3 mb-8">
-                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                  <Calculator className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                  <Calculator className="w-6 h-6 text-red-600" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-display font-bold text-charcoal-900">
@@ -218,11 +218,11 @@ const Pricing = () => {
                     step="100"
                     value={calculatorData.ticketPrice}
                     onChange={(e) => setCalculatorData({ ...calculatorData, ticketPrice: Number(e.target.value) })}
-                    className="w-full h-2 bg-green-100 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-red-100 rounded-lg appearance-none cursor-pointer"
                   />
                   <div className="flex justify-between text-sm text-charcoal-600">
                     <span>100</span>
-                    <span className="font-semibold text-green-600">{calculatorData.ticketPrice} KES</span>
+                    <span className="font-semibold text-red-600">{calculatorData.ticketPrice} KES</span>
                     <span>10,000</span>
                   </div>
                 </div>
@@ -239,11 +239,11 @@ const Pricing = () => {
                     step="10"
                     value={calculatorData.ticketsSold}
                     onChange={(e) => setCalculatorData({ ...calculatorData, ticketsSold: Number(e.target.value) })}
-                    className="w-full h-2 bg-green-100 rounded-lg appearance-none cursor-pointer"
+                    className="w-full h-2 bg-red-100 rounded-lg appearance-none cursor-pointer"
                   />
                   <div className="flex justify-between text-sm text-charcoal-600">
                     <span>10</span>
-                    <span className="font-semibold text-green-600">{calculatorData.ticketsSold} tickets</span>
+                    <span className="font-semibold text-red-600">{calculatorData.ticketsSold} tickets</span>
                     <span>1000</span>
                   </div>
                 </div>
@@ -258,7 +258,7 @@ const Pricing = () => {
                       onClick={() => setCalculatorData({ ...calculatorData, serviceFeeModel: 'flat' })}
                       className={`px-4 py-3 rounded-xl border-2 transition-all ${
                         calculatorData.serviceFeeModel === 'flat'
-                          ? 'border-green-500 bg-green-50 text-green-700 shadow-sm'
+                          ? 'border-red-500 bg-red-50 text-red-700 shadow-sm'
                           : 'border-gray-200 hover:border-gray-300 bg-white'
                       }`}
                     >
@@ -268,7 +268,7 @@ const Pricing = () => {
                       onClick={() => setCalculatorData({ ...calculatorData, serviceFeeModel: 'percentage' })}
                       className={`px-4 py-3 rounded-xl border-2 transition-all ${
                         calculatorData.serviceFeeModel === 'percentage'
-                          ? 'border-green-500 bg-green-50 text-green-700 shadow-sm'
+                          ? 'border-red-500 bg-red-50 text-red-700 shadow-sm'
                           : 'border-gray-200 hover:border-gray-300 bg-white'
                       }`}
                     >
@@ -286,7 +286,7 @@ const Pricing = () => {
                     type="number"
                     value={calculatorData.serviceFeeValue}
                     onChange={(e) => setCalculatorData({ ...calculatorData, serviceFeeValue: Number(e.target.value) })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   />
                 </div>
               </div>
@@ -294,7 +294,7 @@ const Pricing = () => {
 
             {/* Results */}
             <motion.div
-              className="bg-gradient-to-br from-green-500 to-green-600 rounded-3xl p-8 text-white shadow-xl"
+              className="bg-gradient-to-br from-red-500 to-red-600 rounded-3xl p-8 text-white shadow-xl"
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -304,24 +304,24 @@ const Pricing = () => {
               <div className="space-y-6">
                 <div className="bg-white/10 rounded-2xl p-4 backdrop-blur-sm">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-green-100">You Receive</span>
+                    <span className="text-red-100">You Receive</span>
                     <PieChart className="w-5 h-5" />
                   </div>
                   <div className="text-3xl font-bold">KES {results.totalHostReceives}</div>
-                  <div className="text-green-200 text-sm mt-1">Total earnings after fees</div>
+                  <div className="text-red-200 text-sm mt-1">Total earnings after fees</div>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex justify-between items-center py-2 border-b border-white/20">
-                    <span className="text-green-100">Ticket Revenue</span>
+                    <span className="text-red-100">Ticket Revenue</span>
                     <span className="font-semibold">KES {results.totalTicketRevenue}</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/20">
-                    <span className="text-green-100">Service Fee</span>
+                    <span className="text-red-100">Service Fee</span>
                     <span className="font-semibold">- KES {results.pasaEarnings}</span>
                   </div>
                   <div className="flex justify-between items-center py-2">
-                    <span className="text-green-100">Payment Fees</span>
+                    <span className="text-red-100">Payment Fees</span>
                     <span className="font-semibold">- KES {results.totalMpesaFees}</span>
                   </div>
                 </div>
@@ -335,7 +335,7 @@ const Pricing = () => {
 
                 <Link
                   to="/signup"
-                  className="block w-full bg-white text-green-600 text-center py-4 rounded-xl font-semibold hover:bg-green-50 transition-all duration-200 mt-6 shadow-lg"
+                  className="block w-full bg-white text-red-600 text-center py-4 rounded-xl font-semibold hover:bg-red-50 transition-all duration-200 mt-6 shadow-lg"
                 >
                   Start Selling Tickets
                   <ArrowRight className="w-4 h-4 inline ml-2" />
@@ -367,14 +367,14 @@ const Pricing = () => {
             {faqs.map((faq, index) => (
               <motion.div
                 key={faq.question}
-                className="bg-green-50 rounded-2xl p-6 border border-green-200 hover:border-green-300 transition-all duration-300"
+                className="bg-red-50 rounded-2xl p-6 border border-red-200 hover:border-red-300 transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <HelpCircle className="w-4 h-4 text-green-600" />
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <HelpCircle className="w-4 h-4 text-red-600" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-charcoal-900 mb-3 text-lg">
@@ -399,7 +399,7 @@ const Pricing = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <div className="inline-flex items-center space-x-2 bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <div className="inline-flex items-center space-x-2 bg-red-500/20 text-red-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Target className="w-4 h-4" />
               <span>Join Thousands of Hosts</span>
             </div>
@@ -421,8 +421,8 @@ const Pricing = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-3">
-                    <badge.icon className="w-6 h-6 text-green-400" />
+                  <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center mb-3">
+                    <badge.icon className="w-6 h-6 text-red-400" />
                   </div>
                   <span className="text-sm font-medium text-gray-300">{badge.text}</span>
                 </motion.div>
@@ -437,7 +437,7 @@ const Pricing = () => {
             >
               <Link
                 to="/signup"
-                className="inline-flex items-center justify-center bg-green-500 text-white px-8 py-4 rounded-full hover:bg-green-600 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center bg-red-500 text-white px-8 py-4 rounded-full hover:bg-red-600 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
               >
                 Start for Free
                 <ArrowRight className="w-5 h-5 ml-2" />

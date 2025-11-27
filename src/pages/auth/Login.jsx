@@ -86,7 +86,7 @@ const Login = () => {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-lg"
+                className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-lg"
                 placeholder="Enter your email"
                 autoFocus
               />
@@ -107,7 +107,7 @@ const Login = () => {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full pl-12 pr-12 py-4 rounded-full border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-lg"
+                className="w-full pl-12 pr-12 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-lg"
                 placeholder="Enter your password"
               />
               <button
@@ -125,13 +125,13 @@ const Login = () => {
             <label className="flex items-center">
               <input
                 type="checkbox"
-                className="rounded border-primary-300 text-green-500 focus:ring-green-200"
+                className="rounded border-primary-300 text-red-500 focus:ring-red-200"
               />
               <span className="ml-2 text-sm text-charcoal-600">Remember me</span>
             </label>
             <Link
               to="/forgot-password"
-              className="text-sm text-green-500 hover:text-green-600 transition-colors"
+              className="text-sm text-red-500 hover:text-red-600 transition-colors"
             >
               Forgot password?
             </Link>
@@ -143,7 +143,7 @@ const Login = () => {
             disabled={loading}
             className={`w-full rounded-full py-4 font-semibold transition-all ${
               !loading
-                ? 'bg-green-500 hover:bg-green-600 text-white transform hover:scale-105'
+                ? 'bg-red-500 hover:bg-red-600 text-white transform hover:scale-105'
                 : 'bg-primary-200 text-charcoal-400 cursor-not-allowed'
             }`}
           >
@@ -181,7 +181,7 @@ const Login = () => {
             <span className="text-charcoal-600">Don't have an account? </span>
             <Link
               to="/signup"
-              className="text-green-500 hover:text-green-600 font-medium transition-colors"
+              className="text-red-500 hover:text-red-600 font-medium transition-colors"
             >
               Sign up
             </Link>
