@@ -33,7 +33,7 @@ const Events = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-primary-50 py-8">
+    <div className="min-h-screen mt-32 bg-primary-50 py-8">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -42,7 +42,7 @@ const Events = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-charcoal-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-red-500 mb-4">
             Discover Events
           </h1>
           <p className="text-xl text-charcoal-600 max-w-2xl mx-auto">
@@ -65,7 +65,7 @@ const Events = () => {
                 <input
                   type="text"
                   placeholder="Search events..."
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-primary-300 focus:border-accent-500 focus:ring-2 focus:ring-accent-200 outline-none transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   value={localFilters.search}
                   onChange={(e) => handleFilterChange({ ...localFilters, search: e.target.value })}
                 />
@@ -79,7 +79,7 @@ const Events = () => {
                   key={category}
                   className={`px-4 py-2 rounded-xl whitespace-nowrap transition-all ${
                     localFilters.category === category.toLowerCase()
-                      ? 'bg-accent-500 text-white'
+                      ? 'bg-red-500 text-white'
                       : 'bg-primary-200 text-charcoal-700 hover:bg-primary-300'
                   }`}
                   onClick={() => handleFilterChange({
@@ -96,7 +96,7 @@ const Events = () => {
             <div className="flex items-center gap-2">
               <button
                 className={`p-2 rounded-xl transition-all ${
-                  viewMode === 'grid' ? 'bg-accent-500 text-white' : 'bg-primary-200 text-charcoal-700'
+                  viewMode === 'grid' ? 'bg-red-500 text-white' : 'bg-primary-200 text-charcoal-700'
                 }`}
                 onClick={() => setViewMode('grid')}
               >
@@ -104,7 +104,7 @@ const Events = () => {
               </button>
               <button
                 className={`p-2 rounded-xl transition-all ${
-                  viewMode === 'list' ? 'bg-accent-500 text-white' : 'bg-primary-200 text-charcoal-700'
+                  viewMode === 'list' ? 'bg-red-500 text-white' : 'bg-primary-200 text-charcoal-700'
                 }`}
                 onClick={() => setViewMode('list')}
               >

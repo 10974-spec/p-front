@@ -353,163 +353,191 @@ const Signup = () => {
   }
 
   return (
-    <div className="min-h-screen bg-primary-50 flex items-center justify-center py-12 px-4">
-      <motion.div
-        className="max-w-md w-full"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        {/* Header */}
-   <div className="text-center mb-8">
-  <Link to="/" className="inline-flex items-center space-x-2 mb-6">
-    <img 
-      src="/src/assets/logo.png" 
-      alt="PASA Logo" 
-      className="size-24" 
-    />
-  </Link>
-</div>
-
-        {/* Progress Bar */}
-        <div className="mb-8 px-4">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-charcoal-700">
-              Step {currentStep} of {steps.length}
-            </span>
-            <span className="text-sm font-medium text-red-600">
-              {Math.round(progressPercentage)}% Complete
-            </span>
-          </div>
-          <div className="w-full bg-primary-200 rounded-full h-2">
-            <motion.div
-              className="bg-red-500 h-2 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${progressPercentage}%` }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            />
-          </div>
-        </div>
-
-        {/* Progress Steps */}
-        <div className="flex justify-between items-center mb-8 px-4">
-          {steps.map((step, index) => (
-            <React.Fragment key={step.number}>
-              <div className="flex flex-col items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
-                  completedSteps.has(step.number) || currentStep > step.number
-                    ? 'bg-red-500 text-white'
-                    : currentStep === step.number
-                    ? 'bg-red-100 border-2 border-red-500 text-red-600'
-                    : 'bg-primary-200 text-charcoal-600'
-                }`}>
-                  {completedSteps.has(step.number) || currentStep > step.number ? (
-                    <Check className="w-5 h-5" />
-                  ) : (
-                    step.number
-                  )}
-                </div>
-                <span className={`text-xs mt-2 hidden sm:block ${
-                  completedSteps.has(step.number) || currentStep >= step.number
-                    ? 'text-red-600 font-medium'
-                    : 'text-charcoal-500'
-                }`}>
-                  {step.title}
-                </span>
-              </div>
-              {index < steps.length - 1 && (
-                <div className={`flex-1 h-1 mx-2 transition-all ${
-                  completedSteps.has(step.number + 1) || currentStep > step.number
-                    ? 'bg-red-500'
-                    : 'bg-primary-200'
-                }`} />
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-
-        {/* Signup Form */}
-        <motion.form
-          className="card p-8"
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+    <div className="min-h-screen bg-primary-50 flex">
+      {/* Left Side - Logo Image */}
+      <div className="hidden lg:flex lg:w-1/2 bg-red-500 items-center justify-center p-12">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
         >
-          {error && (
-            <motion.div
-              className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-            >
-              {error}
-            </motion.div>
-          )}
+          <img 
+            src="/src/assets/left.png" 
+            alt="PASA Event Platform" 
+            className="max-w-full h-auto max-h-96 object-contain"
+          />
+          <motion.h1 
+            className="text-4xl font-display font-bold text-white mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            PASA Events
+          </motion.h1>
+          <motion.p 
+            className="text-red-100 text-xl mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            Join Our Community Today
+          </motion.p>
+        </motion.div>
+      </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentStep}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              {getStepContent()}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation Buttons */}
-          <div className="flex space-x-4 mt-8">
-            {currentStep > 1 && (
-              <button
-                type="button"
-                onClick={prevStep}
-                className="flex-1 bg-white border-2 border-red-500 text-red-500 hover:bg-red-50 rounded-full py-4 flex items-center justify-center space-x-2 transition-all duration-200 font-semibold"
-              >
-                <ChevronLeft className="w-4 h-4" />
-                <span>Back</span>
-              </button>
-            )}
-            
-            <button
-              type="submit"
-              disabled={!isStepValid() || loading}
-              className={`flex-1 rounded-full py-4 font-semibold transition-all flex items-center justify-center space-x-2 ${
-                isStepValid() && !loading
-                  ? 'bg-red-500 hover:bg-red-600 text-white transform hover:scale-105'
-                  : 'bg-primary-200 text-charcoal-400 cursor-not-allowed'
-              }`}
-            >
-              <span>
-                {loading ? 'Creating...' : currentStep === steps.length ? 'Create Account' : 'Continue'}
-              </span>
-              {currentStep < steps.length && !loading && <ChevronRight className="w-4 h-4" />}
-            </button>
+      {/* Right Side - Signup Form */}
+      <div className="flex-1 flex items-center justify-center py-12 px-4">
+        <motion.div
+          className="max-w-md w-full"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* Mobile Logo */}
+          <div className="lg:hidden text-center mb-8">
+            <Link to="/" className="inline-flex items-center space-x-2 mb-6">
+              <img 
+                src="/src/assets/logo2.png" 
+                alt="PASA Logo" 
+                className="size-16" 
+              />
+            </Link>
           </div>
 
-          {/* Login Link */}
-          {currentStep === 1 && (
-            <div className="text-center mt-6 pt-6 border-t border-primary-200">
-              <span className="text-charcoal-600">Already have an account? </span>
-              <Link
-                to="/login"
-                className="text-red-500 hover:text-red-600 font-medium transition-colors"
-              >
-                Sign in
-              </Link>
+          {/* Progress Bar */}
+          <div className="mb-8 px-4">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-medium text-charcoal-700">
+                Step {currentStep} of {steps.length}
+              </span>
+              <span className="text-sm font-medium text-red-600">
+                {Math.round(progressPercentage)}% Complete
+              </span>
             </div>
-          )}
-        </motion.form>
-      </motion.div>
+            <div className="w-full bg-primary-200 rounded-full h-2">
+              <motion.div
+                className="bg-red-500 h-2 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${progressPercentage}%` }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              />
+            </div>
+          </div>
+
+          {/* Progress Steps */}
+          <div className="flex justify-between items-center mb-8 px-4">
+            {steps.map((step, index) => (
+              <React.Fragment key={step.number}>
+                <div className="flex flex-col items-center">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
+                    completedSteps.has(step.number) || currentStep > step.number
+                      ? 'bg-red-500 text-white'
+                      : currentStep === step.number
+                      ? 'bg-red-100 border-2 border-red-500 text-red-600'
+                      : 'bg-primary-200 text-charcoal-600'
+                  }`}>
+                    {completedSteps.has(step.number) || currentStep > step.number ? (
+                      <Check className="w-5 h-5" />
+                    ) : (
+                      step.number
+                    )}
+                  </div>
+                  <span className={`text-xs mt-2 hidden sm:block ${
+                    completedSteps.has(step.number) || currentStep >= step.number
+                      ? 'text-red-600 font-medium'
+                      : 'text-charcoal-500'
+                  }`}>
+                    {step.title}
+                  </span>
+                </div>
+                {index < steps.length - 1 && (
+                  <div className={`flex-1 h-1 mx-2 transition-all ${
+                    completedSteps.has(step.number + 1) || currentStep > step.number
+                      ? 'bg-red-500'
+                      : 'bg-primary-200'
+                  }`} />
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* Signup Form */}
+          <motion.form
+            className="card p-8"
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {error && (
+              <motion.div
+                className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                {error}
+              </motion.div>
+            )}
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                {getStepContent()}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Navigation Buttons */}
+            <div className="flex space-x-4 mt-8">
+              {currentStep > 1 && (
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="flex-1 bg-white border-2 border-red-500 text-red-500 hover:bg-red-50 rounded-full py-4 flex items-center justify-center space-x-2 transition-all duration-200 font-semibold"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  <span>Back</span>
+                </button>
+              )}
+              
+              <button
+                type="submit"
+                disabled={!isStepValid() || loading}
+                className={`flex-1 rounded-full py-4 font-semibold transition-all flex items-center justify-center space-x-2 ${
+                  isStepValid() && !loading
+                    ? 'bg-red-500 hover:bg-red-600 text-white transform hover:scale-105'
+                    : 'bg-primary-200 text-charcoal-400 cursor-not-allowed'
+                }`}
+              >
+                <span>
+                  {loading ? 'Creating...' : currentStep === steps.length ? 'Create Account' : 'Continue'}
+                </span>
+                {currentStep < steps.length && !loading && <ChevronRight className="w-4 h-4" />}
+              </button>
+            </div>
+
+            {/* Login Link */}
+            {currentStep === 1 && (
+              <div className="text-center mt-6 pt-6 border-t border-primary-200">
+                <span className="text-charcoal-600">Already have an account? </span>
+                <Link
+                  to="/login"
+                  className="text-red-500 hover:text-red-600 font-medium transition-colors"
+                >
+                  Sign in
+                </Link>
+              </div>
+            )}
+          </motion.form>
+        </motion.div>
+      </div>
     </div>
   )
 }
-
-// Calendar icon component
-const Calendar = ({ className }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-  </svg>
-)
 
 export default Signup

@@ -179,7 +179,7 @@ const CreateEvent = () => {
                   required
                   value={formData.title}
                   onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="Enter event title"
                   autoFocus
                 />
@@ -194,7 +194,7 @@ const CreateEvent = () => {
                   rows={4}
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all resize-none"
                   placeholder="Describe your event..."
                 />
               </div>
@@ -207,7 +207,7 @@ const CreateEvent = () => {
                   required
                   value={formData.category}
                   onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 >
                   <option value="">Select a category</option>
                   {categories.map(category => (
@@ -241,7 +241,7 @@ const CreateEvent = () => {
                   required
                   value={formData.dateStart}
                   onChange={(e) => setFormData(prev => ({ ...prev, dateStart: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 />
               </div>
 
@@ -254,7 +254,7 @@ const CreateEvent = () => {
                   required
                   value={formData.dateEnd}
                   onChange={(e) => setFormData(prev => ({ ...prev, dateEnd: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                 />
               </div>
             </div>
@@ -286,7 +286,7 @@ const CreateEvent = () => {
                     ...prev, 
                     venue: { ...prev.venue, name: e.target.value } 
                   }))}
-                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="Enter venue name"
                   autoFocus
                 />
@@ -304,7 +304,7 @@ const CreateEvent = () => {
                     ...prev, 
                     venue: { ...prev.venue, address: e.target.value } 
                   }))}
-                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                  className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                   placeholder="Enter full address"
                 />
               </div>
@@ -352,7 +352,7 @@ const CreateEvent = () => {
                         required
                         value={tier.name}
                         onChange={(e) => updateTicketTier(index, 'name', e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                        className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                         placeholder="e.g., General Admission"
                       />
                     </div>
@@ -368,7 +368,7 @@ const CreateEvent = () => {
                         step="0.01"
                         value={tier.price}
                         onChange={(e) => updateTicketTier(index, 'price', e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                        className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                         placeholder="0.00"
                       />
                     </div>
@@ -383,7 +383,7 @@ const CreateEvent = () => {
                         min="1"
                         value={tier.totalQty}
                         onChange={(e) => updateTicketTier(index, 'totalQty', e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all"
+                        className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
                         placeholder="100"
                       />
                     </div>
@@ -394,7 +394,7 @@ const CreateEvent = () => {
               <button
                 type="button"
                 onClick={addTicketTier}
-                className="w-full p-4 border-2 border-dashed border-green-500 text-green-500 hover:bg-green-50 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2"
+                className="w-full p-4 border-2 border-dashed border-red-500 text-red-500 hover:bg-red-50 rounded-xl transition-all duration-200 flex items-center justify-center space-x-2"
               >
                 <span>+</span>
                 <span>Add Another Ticket Tier</span>
@@ -437,9 +437,9 @@ const CreateEvent = () => {
                     </button>
                   </div>
                 ) : (
-                  <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-green-500 rounded-xl cursor-pointer hover:bg-green-50 transition-all">
-                    <Upload className="w-12 h-12 text-green-500 mb-2" />
-                    <span className="text-green-500 font-medium">Upload Main Image</span>
+                  <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-red-500 rounded-xl cursor-pointer hover:bg-red-50 transition-all">
+                    <Upload className="w-12 h-12 text-red-500 mb-2" />
+                    <span className="text-red-500 font-medium">Upload Main Image</span>
                     <input
                       type="file"
                       accept="image/*"
@@ -474,7 +474,7 @@ const CreateEvent = () => {
                   ))}
                   
                   {formData.gallery.length < 6 && (
-                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-primary-300 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-all">
+                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-primary-300 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-all">
                       <Upload className="w-6 h-6 text-charcoal-500 mb-1" />
                       <span className="text-xs text-charcoal-500">Add Image</span>
                       <input
@@ -495,7 +495,7 @@ const CreateEvent = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Check className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-2xl font-display font-bold text-charcoal-900 mb-2">
@@ -506,9 +506,9 @@ const CreateEvent = () => {
               </p>
             </div>
 
-            <div className="bg-green-50 rounded-xl p-6 border border-green-200">
-              <h4 className="font-semibold text-green-800 mb-4">Event Summary:</h4>
-              <div className="space-y-3 text-sm text-green-700">
+            <div className="bg-red-50 rounded-xl p-6 border border-red-200">
+              <h4 className="font-semibold text-red-800 mb-4">Event Summary:</h4>
+              <div className="space-y-3 text-sm text-red-700">
                 <div className="flex justify-between">
                   <span>Title:</span>
                   <span className="font-medium">{formData.title}</span>
@@ -563,7 +563,7 @@ const CreateEvent = () => {
         >
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => navigate('/host/events')}
+              onClick={() => navigate('/host')}
               className="btn-secondary p-3"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -586,20 +586,20 @@ const CreateEvent = () => {
               <div className="flex flex-col items-center">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all ${
                   currentStep >= step.number
-                    ? 'bg-green-500 text-white'
+                    ? 'bg-red-500 text-white'
                     : 'bg-primary-200 text-charcoal-600'
                 }`}>
                   {currentStep > step.number ? <Check className="w-5 h-5" /> : step.number}
                 </div>
                 <span className={`text-xs mt-2 ${
-                  currentStep >= step.number ? 'text-green-600 font-medium' : 'text-charcoal-500'
+                  currentStep >= step.number ? 'text-red-600 font-medium' : 'text-charcoal-500'
                 }`}>
                   {step.title}
                 </span>
               </div>
               {index < steps.length - 1 && (
                 <div className={`flex-1 h-1 mx-2 transition-all ${
-                  currentStep > step.number ? 'bg-green-500' : 'bg-primary-200'
+                  currentStep > step.number ? 'bg-red-500' : 'bg-primary-200'
                 }`} />
               )}
             </React.Fragment>
@@ -634,7 +634,7 @@ const CreateEvent = () => {
                     <button
                       type="button"
                       onClick={prevStep}
-                      className="flex items-center space-x-2 px-6 py-3 border-2 border-green-500 text-green-500 hover:bg-green-50 rounded-full font-semibold transition-all duration-200"
+                      className="flex items-center space-x-2 px-6 py-3 border-2 border-red-500 text-red-500 hover:bg-red-50 rounded-full font-semibold transition-all duration-200"
                     >
                       <ChevronLeft className="w-4 h-4" />
                       <span>Back</span>
@@ -655,7 +655,7 @@ const CreateEvent = () => {
                     disabled={!isStepValid()}
                     className={`flex items-center space-x-2 px-8 py-3 rounded-full font-semibold transition-all duration-200 ${
                       isStepValid()
-                        ? 'bg-green-500 hover:bg-green-600 text-white transform hover:scale-105'
+                        ? 'bg-red-500 hover:bg-red-600 text-white transform hover:scale-105'
                         : 'bg-primary-200 text-charcoal-400 cursor-not-allowed'
                     }`}
                   >

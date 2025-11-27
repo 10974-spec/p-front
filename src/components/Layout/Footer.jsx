@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-4">
                        <img 
-    src="/src/assets/logo.png" 
+    src="/src/assets/logo2.png" 
     alt="PASA Logo" 
     className="size-24  object-cover" 
   />

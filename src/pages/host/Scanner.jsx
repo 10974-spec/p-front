@@ -77,7 +77,7 @@ const HostScanner = () => {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-primary-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 to-primary-50 py-8">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -86,7 +86,7 @@ const HostScanner = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="w-20 h-20 bg-green-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Scan className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-4xl font-display font-bold text-charcoal-900 mb-4">
@@ -100,14 +100,14 @@ const HostScanner = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Scanner Section */}
           <motion.div
-            className="bg-white rounded-3xl p-8 border border-green-100 shadow-lg"
+            className="bg-white rounded-3xl p-8 border border-red-100 shadow-lg"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <Camera className="w-6 h-6 text-green-600" />
+              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                <Camera className="w-6 h-6 text-red-600" />
               </div>
               <div>
                 <h2 className="text-2xl font-semibold text-charcoal-900">
@@ -137,15 +137,15 @@ const HostScanner = () => {
               {/* Scanner Overlay */}
               {isScanning && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-64 h-64 border-2 border-green-400 rounded-xl relative shadow-lg">
-                    <div className="absolute -top-1 -left-1 w-6 h-6 border-t-2 border-l-2 border-green-400" />
-                    <div className="absolute -top-1 -right-1 w-6 h-6 border-t-2 border-r-2 border-green-400" />
-                    <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-2 border-l-2 border-green-400" />
-                    <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-2 border-r-2 border-green-400" />
+                  <div className="w-64 h-64 border-2 border-red-400 rounded-xl relative shadow-lg">
+                    <div className="absolute -top-1 -left-1 w-6 h-6 border-t-2 border-l-2 border-red-400" />
+                    <div className="absolute -top-1 -right-1 w-6 h-6 border-t-2 border-r-2 border-red-400" />
+                    <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-2 border-l-2 border-red-400" />
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-2 border-r-2 border-red-400" />
                     
                     {/* Animated scanning line */}
                     <motion.div
-                      className="absolute top-0 left-0 right-0 h-1 bg-green-400 rounded-full"
+                      className="absolute top-0 left-0 right-0 h-1 bg-red-400 rounded-full"
                       initial={{ y: 0 }}
                       animate={{ y: 256 }}
                       transition={{
@@ -164,7 +164,7 @@ const HostScanner = () => {
               {!isScanning ? (
                 <button
                   onClick={startCamera}
-                  className="flex-1 bg-green-500 hover:bg-green-600 text-white py-4 px-6 rounded-xl font-semibold flex items-center justify-center space-x-3 transition-all duration-200 shadow-lg hover:shadow-xl"
+                  className="flex-1 bg-red-500 hover:bg-red-600 text-white py-4 px-6 rounded-xl font-semibold flex items-center justify-center space-x-3 transition-all duration-200 shadow-lg hover:shadow-xl"
                 >
                   <Camera className="w-5 h-5" />
                   <span>Start Camera</span>
@@ -181,7 +181,7 @@ const HostScanner = () => {
               {/* Simulate Scan Button for Development */}
               <button
                 onClick={simulateScan}
-                className="flex-1 bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="flex-1 bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Test Scan
               </button>
@@ -200,14 +200,14 @@ const HostScanner = () => {
 
           {/* Scan Results */}
           <motion.div
-            className="bg-white rounded-3xl p-8 border border-green-100 shadow-lg"
+            className="bg-white rounded-3xl p-8 border border-red-100 shadow-lg"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                <Ticket className="w-6 h-6 text-green-600" />
+              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                <Ticket className="w-6 h-6 text-red-600" />
               </div>
               <div>
                 <h2 className="text-2xl font-semibold text-charcoal-900">
@@ -221,7 +221,7 @@ const HostScanner = () => {
               <motion.div
                 className={`p-6 rounded-2xl border-2 ${
                   scanResult.valid 
-                    ? 'bg-green-50 border-green-200 shadow-lg' 
+                    ? 'bg-red-50 border-red-200 shadow-lg' 
                     : 'bg-red-50 border-red-200 shadow-lg'
                 }`}
                 initial={{ scale: 0.9, opacity: 0 }}
@@ -230,8 +230,8 @@ const HostScanner = () => {
               >
                 <div className="text-center mb-6">
                   {scanResult.valid ? (
-                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <CheckCircle className="w-10 h-10 text-green-500" />
+                    <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle className="w-10 h-10 text-red-500" />
                     </div>
                   ) : (
                     <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -240,32 +240,32 @@ const HostScanner = () => {
                   )}
                   
                   <h3 className={`text-2xl font-bold mb-3 ${
-                    scanResult.valid ? 'text-green-800' : 'text-red-800'
+                    scanResult.valid ? 'text-red-800' : 'text-red-800'
                   }`}>
                     {scanResult.valid ? 'Valid Ticket!' : 'Invalid Ticket'}
                   </h3>
                   
                   <p className={`text-lg font-medium ${
-                    scanResult.valid ? 'text-green-700' : 'text-red-700'
+                    scanResult.valid ? 'text-red-700' : 'text-red-700'
                   }`}>
                     {scanResult.valid ? 'Entry granted successfully' : scanResult.error}
                   </p>
                 </div>
 
                 {scanResult.valid && scanResult.ticket && (
-                  <div className="space-y-4 bg-white/80 rounded-xl p-4 border border-green-200">
-                    <div className="flex items-center space-x-4 p-3 bg-green-50 rounded-lg">
-                      <Ticket className="w-5 h-5 text-green-600 flex-shrink-0" />
+                  <div className="space-y-4 bg-white/80 rounded-xl p-4 border border-red-200">
+                    <div className="flex items-center space-x-4 p-3 bg-red-50 rounded-lg">
+                      <Ticket className="w-5 h-5 text-red-600 flex-shrink-0" />
                       <div className="flex-1">
                         <p className="font-bold text-charcoal-900 text-lg">
                           {scanResult.ticket.event}
                         </p>
-                        <p className="text-green-700 font-medium">{scanResult.ticket.tier}</p>
+                        <p className="text-red-700 font-medium">{scanResult.ticket.tier}</p>
                       </div>
                     </div>
                     
-                    <div className="flex items-center space-x-4 p-3 bg-green-50 rounded-lg">
-                      <User className="w-5 h-5 text-green-600 flex-shrink-0" />
+                    <div className="flex items-center space-x-4 p-3 bg-red-50 rounded-lg">
+                      <User className="w-5 h-5 text-red-600 flex-shrink-0" />
                       <div className="flex-1">
                         <p className="font-bold text-charcoal-900">
                           {scanResult.ticket.buyer}
@@ -274,14 +274,14 @@ const HostScanner = () => {
                       </div>
                     </div>
                     
-                    <div className="text-center text-sm text-charcoal-500 bg-green-25 py-2 rounded-lg border border-green-100">
+                    <div className="text-center text-sm text-charcoal-500 bg-red-25 py-2 rounded-lg border border-red-100">
                       Checked in at {new Date(scanResult.ticket.checkedInAt).toLocaleString()}
                     </div>
                   </div>
                 )}
               </motion.div>
             ) : (
-              <div className="text-center py-12 text-charcoal-500 bg-green-25 rounded-2xl border-2 border-dashed border-green-200">
+              <div className="text-center py-12 text-charcoal-500 bg-red-25 rounded-2xl border-2 border-dashed border-red-200">
                 <Ticket className="w-16 h-16 mx-auto mb-4 opacity-50" />
                 <p className="text-lg font-medium text-charcoal-700 mb-2">Ready to Scan</p>
                 <p className="text-charcoal-600">Scan a QR code to see validation results</p>
@@ -289,28 +289,28 @@ const HostScanner = () => {
             )}
 
             {/* Instructions */}
-            <div className="mt-8 p-6 bg-gradient-to-br from-green-50 to-green-25 rounded-2xl border border-green-200">
+            <div className="mt-8 p-6 bg-gradient-to-br from-red-50 to-red-25 rounded-2xl border border-red-200">
               <div className="flex items-center space-x-3 mb-4">
-                <Lightbulb className="w-5 h-5 text-green-600" />
+                <Lightbulb className="w-5 h-5 text-red-600" />
                 <h4 className="font-bold text-charcoal-900 text-lg">
                   Pro Scanning Tips
                 </h4>
               </div>
               <ul className="space-y-3 text-charcoal-700">
                 <li className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
                   <span>Ensure good lighting for better detection</span>
                 </li>
                 <li className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
                   <span>Hold steady 6-12 inches from the code</span>
                 </li>
                 <li className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
                   <span>Position QR code within the frame</span>
                 </li>
                 <li className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <div className="w-2 h-2 bg-red-400 rounded-full"></div>
                   <span>Ask attendees to maximize screen brightness</span>
                 </li>
               </ul>

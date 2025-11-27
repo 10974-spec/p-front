@@ -117,10 +117,10 @@ const Pricing = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-primary-50">
+    <div className="min-h-screen  bg-white">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent"></div>
+      <section className="relative pt-44 py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-white to-transparent"></div>
         <div className="max-w-6xl mx-auto relative">
           <motion.div
             className="text-center mb-16"
@@ -392,7 +392,7 @@ const Pricing = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-charcoal-900 to-charcoal-800">
+      <section className="py-20 px-4 bg-gradient-to-br from-charcoal-900 to-charcoal-800 m-10 rounded-full">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

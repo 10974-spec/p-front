@@ -46,6 +46,13 @@ const AuthLayout = ({ children }) => (
   </div>
 )
 
+// Layout component for host routes (no navbar/footer)
+const HostLayout = ({ children }) => (
+  <div className="min-h-screen bg-gray-50">
+    {children}
+  </div>
+)
+
 function App() {
   const dispatch = useDispatch()
   const { isAuthenticated, user } = useSelector((state) => state.auth)
@@ -81,7 +88,26 @@ function App() {
             <Signup />
           </AuthLayout>
         } />
-         <Route path="/create" element={<CreateEvent />} />
+
+        {/* Host Routes - No Navbar/Footer */}
+        <Route path="/host/*" element={
+          <HostLayout>
+            <Routes>
+              <Route path="/" element={<HostDashboard />} />
+              <Route path="/events" element={<HostEvents />} />
+              <Route path="/scanner" element={<HostScanner />} />
+              <Route path="/payouts" element={<HostPayouts />} />
+              <Route path="/events/create" element={<CreateEvent />} />
+            </Routes>
+          </HostLayout>
+        } />
+
+        {/* Create Event Route - Also without navbar/footer */}
+        <Route path="/create" element={
+          <HostLayout>
+            <CreateEvent />
+          </HostLayout>
+        } />
 
         {/* Main Routes - With Navbar/Footer */}
         <Route path="/*" element={
@@ -92,9 +118,7 @@ function App() {
               <Route path="/event/:slug" element={<EventDetails />} />
               <Route path="/waitlist" element={<Waitlist />} />
               <Route path="/pricing" element={<Pricing />} />
-             
-
-
+              
               {/* Protected User Routes */}
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/dashboard/tickets" element={<Tickets />} />
@@ -102,12 +126,6 @@ function App() {
               {/* Checkout Flow */}
               <Route path="/checkout/:eventId" element={<Checkout />} />
               <Route path="/ticket/:bookingId" element={<TicketView />} />
-
-              {/* Host Routes */}
-              <Route path="/host" element={<HostDashboard />} />
-              <Route path="/host/events" element={<HostEvents />} />
-              <Route path="/host/scanner" element={<HostScanner />} />
-              <Route path="/host/payouts" element={<HostPayouts />} />
             </Routes>
           </MainLayout>
         } />

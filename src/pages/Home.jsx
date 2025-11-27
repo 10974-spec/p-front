@@ -264,7 +264,7 @@ const Home = () => {
       </section>
        
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 pt-12 lg:pt-0">
+      <section className=" relative min-h-screen flex items-center justify-center px-6 pt-12 lg:pt-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-100 via-primary-50 to-accent-50" />
         
         {/* Mobile Carousel */}
