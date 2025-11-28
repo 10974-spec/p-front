@@ -197,12 +197,20 @@ const Navbar = () => {
             animate="visible"
             exit="hidden"
           >
-            <div className="glass rounded-full shadow-floating border border-red-800 backdrop-blur-xl">
-              <div className="flex items-center justify-between px-4 py-3">
+            {/* Reddish frosted glass effect */}
+            <div className="relative rounded-full shadow-floating border border-red-300/30 backdrop-blur-xl overflow-hidden">
+              {/* Red tint overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-red-600/15 mix-blend-overlay"></div>
+              
+              {/* Subtle red pattern for texture */}
+              <div className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-600 to-transparent bg-[length:20px_20px]"></div>
+              
+              {/* Content */}
+              <div className="relative flex items-center justify-between px-4 py-3">
                 {/* Logo - Compact */}
                 <Link 
                   to="/" 
-                  className="flex items-center space-x-2 flex-shrink-0"
+                  className="flex items-center space-x-2 flex-shrink-0 z-10"
                 >
                   <img 
                     src="/src/assets/logo2.png" 
@@ -212,28 +220,28 @@ const Navbar = () => {
                 </Link>
 
                 {/* Search Bar - Compact */}
-                <div className="flex-1 max-w-xs mx-4">
+                <div className="flex-1 max-w-xs mx-4 z-10">
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-charcoal-400 w-4 h-4" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-red-400 w-4 h-4" />
                     <input
                       type="text"
                       placeholder="Search events..."
-                      className="w-full pl-10 pr-4 py-2 rounded-full border border-primary-300 focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition-all text-sm bg-white/50"
+                      className="w-full pl-10 pr-4 py-2 rounded-full border border-red-200 bg-white/70 text-red-900 placeholder-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-sm"
                       onClick={() => navigate('/events')}
                     />
                   </div>
                 </div>
 
                 {/* Quick Actions */}
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 z-10">
                   {quickActions.slice(0, 2).map((action) => (
                     <Link
                       key={action.label}
                       to={action.path}
-                      className="p-2 rounded-full hover:bg-white/30 transition-colors"
+                      className="p-2 rounded-full hover:bg-red-500/20 transition-colors group"
                       title={action.label}
                     >
-                      <action.icon className="w-4 h-4 text-charcoal-700" />
+                      <action.icon className="w-4 h-4 text-red-700 group-hover:text-red-800 transition-colors" />
                     </Link>
                   ))}
                   
@@ -241,13 +249,13 @@ const Navbar = () => {
                   {isAuthenticated ? (
                     <Link
                       to="/events"
-                      className="bg-green-500 text-white px-3 py-2 rounded-full text-sm font-semibold hover:bg-green-600 transition-colors"
+                      className="bg-red-500 text-white px-3 py-2 rounded-full text-sm font-semibold hover:bg-red-600 transition-colors shadow-lg shadow-red-500/25"
                     >
                       Book Event
                     </Link>
                   ) : (
                     <button
-                      className="bg-red-500 text-white px-3 py-2 rounded-full text-sm font-semibold hover:bg-red-600 transition-colors"
+                      className="bg-red-500 text-white px-3 py-2 rounded-full text-sm font-semibold hover:bg-red-600 transition-colors shadow-lg shadow-red-500/25"
                       onClick={handleBookEventClick}
                     >
                       Get Started
@@ -256,10 +264,10 @@ const Navbar = () => {
                   
                   {/* Mobile Menu Button for Compact Nav */}
                   <button
-                    className="p-2 rounded-full hover:bg-white/30 transition-colors lg:hidden"
+                    className="p-2 rounded-full hover:bg-red-500/20 transition-colors group lg:hidden"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   >
-                    <Menu className="w-4 h-4 text-charcoal-700" />
+                    <Menu className="w-4 h-4 text-red-700 group-hover:text-red-800 transition-colors" />
                   </button>
                 </div>
               </div>
@@ -289,18 +297,25 @@ const Navbar = () => {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             >
-              <div className="glass-dark rounded-2xl p-6 shadow-2xl border border-white/10 backdrop-blur-xl">
-                <div className="space-y-3">
+              {/* Reddish frosted glass for mobile menu */}
+              <div className="relative rounded-2xl p-6 shadow-2xl border border-red-300/30 backdrop-blur-xl overflow-hidden">
+                {/* Red tint overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-500/15 to-red-600/20 mix-blend-overlay"></div>
+                
+                {/* Subtle red pattern */}
+                <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-red-600 to-transparent bg-[length:25px_25px]"></div>
+                
+                <div className="relative space-y-3 z-10">
                   {isAuthenticated ? (
                     <>
                       {/* User Info */}
-                      <div className="text-center mb-4 pb-4 border-b border-white/10">
-                        <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <div className="text-center mb-4 pb-4 border-b border-red-300/20">
+                        <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-red-500/25">
                           <User className="w-6 h-6 text-white" />
                         </div>
-                        <p className="font-semibold text-white text-lg">{user?.name}</p>
-                        <p className="text-primary-200 text-sm">{user?.email}</p>
-                        <p className="text-green-300 text-xs mt-1 capitalize">{user?.role}</p>
+                        <p className="font-semibold text-red-900 text-lg">{user?.name}</p>
+                        <p className="text-red-600 text-sm">{user?.email}</p>
+                        <p className="text-red-700 text-xs mt-1 capitalize font-medium">{user?.role}</p>
                       </div>
 
                       {/* Quick Actions Grid */}
@@ -309,11 +324,11 @@ const Navbar = () => {
                           <Link
                             key={action.label}
                             to={action.path}
-                            className="flex flex-col items-center p-3 rounded-xl hover:bg-white/10 transition-colors text-white"
+                            className="flex flex-col items-center p-3 rounded-xl hover:bg-red-500/20 transition-colors text-red-900 border border-red-200/50"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
                             <action.icon className="w-5 h-5 mb-1" />
-                            <span className="text-xs">{action.label}</span>
+                            <span className="text-xs font-medium">{action.label}</span>
                           </Link>
                         ))}
                       </div>
@@ -321,28 +336,28 @@ const Navbar = () => {
                       {/* Menu Items */}
                       <Link
                         to="/dashboard"
-                        className="flex items-center space-x-3 text-white py-3 px-4 rounded-xl hover:bg-white/10 transition-colors"
+                        className="flex items-center space-x-3 text-red-900 py-3 px-4 rounded-xl hover:bg-red-500/20 transition-colors border border-red-200/50"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         <User className="w-5 h-5" />
-                        <span>Dashboard</span>
+                        <span className="font-medium">Dashboard</span>
                       </Link>
                       
                       {user?.role === 'host' && (
                         <Link
                           to="/host"
-                          className="flex items-center space-x-3 text-white py-3 px-4 rounded-xl hover:bg-white/10 transition-colors"
+                          className="flex items-center space-x-3 text-red-900 py-3 px-4 rounded-xl hover:bg-red-500/20 transition-colors border border-red-200/50"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           <Calendar className="w-5 h-5" />
-                          <span>Host Dashboard</span>
+                          <span className="font-medium">Host Dashboard</span>
                         </Link>
                       )}
 
-                      <div className="pt-3 border-t border-white/10">
+                      <div className="pt-3 border-t border-red-300/20">
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center space-x-3 text-white py-3 px-4 rounded-full hover:bg-red-500/20 transition-colors"
+                          className="w-full flex items-center space-x-3 text-red-700 py-3 px-4 rounded-full hover:bg-red-500/20 transition-colors font-medium border border-red-200/50"
                         >
                           <LogOut className="w-5 h-5" />
                           <span>Logout</span>
@@ -353,29 +368,29 @@ const Navbar = () => {
                     <>
                       <Link
                         to="/login"
-                        className="block text-white py-4 px-4 rounded-full hover:bg-white/10 transition-colors text-center border border-white/20"
+                        className="block text-red-700 py-4 px-4 rounded-full hover:bg-red-500/20 transition-colors text-center border border-red-300 font-medium"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         Login
                       </Link>
                       <button
                         onClick={handleBookEventClick}
-                        className="w-full bg-red-500 text-white py-4 px-4 rounded-full hover:bg-red-600 transition-colors text-center"
+                        className="w-full bg-red-500 text-white py-4 px-4 rounded-full hover:bg-red-600 transition-colors text-center font-semibold shadow-lg shadow-red-500/25"
                       >
                         Get Started
                       </button>
                       
                       {/* Quick Actions for Non-Authenticated */}
-                      <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/10">
+                      <div className="grid grid-cols-2 gap-3 pt-3 border-t border-red-300/20">
                         {quickActions.slice(0, 2).map((action) => (
                           <Link
                             key={action.label}
                             to={action.path}
-                            className="flex flex-col items-center p-3 rounded-xl hover:bg-white/10 transition-colors text-white"
+                            className="flex flex-col items-center p-3 rounded-xl hover:bg-red-500/20 transition-colors text-red-900 border border-red-200/50"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
                             <action.icon className="w-5 h-5 mb-1" />
-                            <span className="text-xs">{action.label}</span>
+                            <span className="text-xs font-medium">{action.label}</span>
                           </Link>
                         ))}
                       </div>
@@ -423,7 +438,7 @@ const Navbar = () => {
 
                 {/* View Pricing Button */}
                 <button
-                  className="w-full border-2 border-red-500 text-red-500 hover:bg-green-50 font-semibold py-4 px-6 rounded-full transition-all duration-200"
+                  className="w-full border-2 border-red-500 text-red-500 hover:bg-red-50 font-semibold py-4 px-6 rounded-full transition-all duration-200"
                   onClick={handleViewPricing}
                 >
                   View Pricing

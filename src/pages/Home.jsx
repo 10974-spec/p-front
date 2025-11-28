@@ -394,11 +394,7 @@ const Home = () => {
 
         {/* Desktop Hero */}
         <div className="hidden lg:block relative z-10 text-center max-w-4xl">
-          <img 
-            src="/src/assets/bg1.png" 
-            alt="PASA Logo" 
-            className="size-14 mt-11 " 
-          />
+      
           <motion.h1
             className="text-5xl md:text-7xl font-display font-bold text-charcoal-900 mb-6"
             initial={{ opacity: 0, y: 30 }}
@@ -408,6 +404,11 @@ const Home = () => {
             Create, share, and sell tickets —{' '}
             <span className="text-red-500">all in one link.</span>
           </motion.h1>
+              <img 
+            src="/src/assets/bg1.png" 
+            alt="PASA Logo" 
+            className="size-24 absolute right-0 z-40 top-60 opacity-75 " 
+          />
           
           <motion.p
             className="text-xl md:text-2xl text-charcoal-600 mb-8 leading-relaxed"
@@ -418,7 +419,7 @@ const Home = () => {
             The next-generation event ticketing platform for creators and attendees.
           </motion.p>
           
-          <motion.div
+          {/* <motion.div
             className="max-w-2xl mx-auto mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -438,7 +439,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
           
           <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"

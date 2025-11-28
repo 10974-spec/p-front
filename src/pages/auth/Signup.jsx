@@ -361,11 +361,12 @@ const Signup = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           className="text-center"
+          onClick={() => navigate('/')}
         >
           <img 
             src="/src/assets/left.png" 
             alt="PASA Event Platform" 
-            className="max-w-full h-auto max-h-96 object-contain"
+            className="max-w-full h-auto max-h-96 object-contain cursor-pointer"
           />
           <motion.h1 
             className="text-4xl font-display font-bold text-white mt-8"
