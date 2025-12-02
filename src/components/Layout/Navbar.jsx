@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../store/slices/authSlice'
-import { Search, Menu, X, User, LogOut, Calendar, Home, Ticket, Scan } from 'lucide-react'
+import { Search, Menu, X, User, LogOut, Calendar, Home, Ticket, Scan, ChevronDown, Settings, CreditCard, Bell } from 'lucide-react'
 import SearchBar from '../Search/SearchBar'
 
 const Navbar = () => {
@@ -12,6 +12,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [showPricingModal, setShowPricingModal] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false)
   const { isAuthenticated, user } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -33,16 +34,50 @@ const Navbar = () => {
     // Initial check
     handleStorageChange()
 
+    // Close dropdown when clicking outside
+    const handleClickOutside = (e) => {
+      if (isUserDropdownOpen && !e.target.closest('.user-dropdown')) {
+        setIsUserDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+
     return () => {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('storage', handleStorageChange)
+      document.removeEventListener('click', handleClickOutside)
     }
-  }, [])
+  }, [isUserDropdownOpen])
+
+  // Generate color based on user's name
+  const getUserColor = (name) => {
+    const colors = [
+      'bg-gradient-to-r from-red-500 to-red-600',
+      'bg-gradient-to-r from-blue-500 to-blue-600',
+      'bg-gradient-to-r from-green-500 to-green-600',
+      'bg-gradient-to-r from-purple-500 to-purple-600',
+      'bg-gradient-to-r from-yellow-500 to-yellow-600',
+      'bg-gradient-to-r from-pink-500 to-pink-600',
+      'bg-gradient-to-r from-indigo-500 to-indigo-600',
+    ]
+    
+    if (!name) return colors[0]
+    
+    // Simple hash function to get consistent color for same name
+    let hash = 0
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    const index = Math.abs(hash) % colors.length
+    return colors[index]
+  }
 
   const handleLogout = () => {
     dispatch(logout())
     navigate('/')
     setIsMobileMenuOpen(false)
+    setIsUserDropdownOpen(false)
   }
 
   const handleBookEventClick = () => {
@@ -132,49 +167,120 @@ const Navbar = () => {
                       {user?.role === 'host' && (
                         <Link 
                           to="/host" 
-                          className="btn-secondary text-sm"
+                          className="btn-secondary text-sm px-4 py-2"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
                           Host Dashboard
                         </Link>
                       )}
                       <Link 
-                          to="/events" 
-                          className="btn-primary bg-red-500 rounded-full text-sm"
+                        to="/events" 
+                        className="btn-primary bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full text-sm px-4 py-2 hover:from-red-600 hover:to-red-700 transition-all shadow-lg shadow-red-500/25"
+                      >
+                        Book Event
+                      </Link>
+                      
+                      {/* User Profile Dropdown */}
+                      <div className="relative user-dropdown">
+                        <button 
+                          className="flex items-center space-x-2 px-3 py-2 rounded-xl hover:bg-white/10 transition-all duration-200 group"
+                          onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
                         >
-                          Book Event
-                        </Link>
-                      <div className="relative group">
-                        <button className="flex items-center space-x-2 glass px-4 py-2 rounded-xl min-w-0">
-                          <User className="w-4 h-4 flex-shrink-0" />
-                          <span className="truncate max-w-32">{user?.name}</span>
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold ${getUserColor(user?.name)}`}>
+                            {user?.name?.charAt(0).toUpperCase() || 'U'}
+                          </div>
+                          <ChevronDown className={`w-4 h-4 text-charcoal-400 transition-transform duration-200 ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
                         </button>
-                        <div className="absolute right-0 top-full mt-2 w-48 glass rounded-xl shadow-floating opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 border border-white/20 backdrop-blur-xl">
-                          <Link 
-                            to="/dashboard" 
-                            className="block px-4 py-3 hover:bg-white/30 rounded-xl transition-colors"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                          >
-                            Dashboard
-                          </Link>
-                          <button
-                            onClick={handleLogout}
-                            className="w-full text-left px-4 py-3 hover:bg-white/30 rounded-xl flex items-center space-x-2 transition-colors"
-                          >
-                            <LogOut className="w-4 h-4" />
-                            <span>Logout</span>
-                          </button>
-                        </div>
+                        
+                        {/* Dropdown Menu */}
+                        <AnimatePresence>
+                          {isUserDropdownOpen && (
+                            <motion.div
+                              className="absolute right-0 top-full mt-2 w-64 bg-white rounded-2xl shadow-2xl border border-red-100 overflow-hidden z-50"
+                              initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                              animate={{ opacity: 1, scale: 1, y: 0 }}
+                              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              {/* User Info Header */}
+                              <div className="p-4 bg-red-500 border-b border-red-200">
+                                <div className="flex items-center space-x-3">
+                                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg ${getUserColor(user?.name)}`}>
+                                    {user?.name?.charAt(0).toUpperCase() || 'U'}
+                                  </div>
+                                  <div>
+                                    <p className="font-semibold text-white">{user?.name}</p>
+                                    <p className="text-xs text-white truncate">{user?.email}</p>
+                                    <span className="inline-block mt-1 px-2 py-0.5 bg-red-200 text-white text-xs rounded-full capitalize">
+                                      {user?.role}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Menu Items */}
+                              <div className="py-2">
+                                <Link 
+                                  to="/dashboard" 
+                                  className="flex items-center space-x-3 px-4 py-3 hover:bg-red-50 transition-colors text-charcoal-700"
+                                  onClick={() => setIsUserDropdownOpen(false)}
+                                >
+                                  <User className="w-4 h-4 text-red-500" />
+                                  <span>Dashboard</span>
+                                </Link>
+                                
+                                <Link 
+                                  to="/dashboard/profile" 
+                                  className="flex items-center space-x-3 px-4 py-3 hover:bg-red-50 transition-colors text-charcoal-700"
+                                  onClick={() => setIsUserDropdownOpen(false)}
+                                >
+                                  <Settings className="w-4 h-4 text-red-500" />
+                                  <span>Profile Settings</span>
+                                </Link>
+                                
+                                {user?.role === 'host' && (
+                                  <Link 
+                                    to="/host/earnings" 
+                                    className="flex items-center space-x-3 px-4 py-3 hover:bg-red-50 transition-colors text-charcoal-700"
+                                    onClick={() => setIsUserDropdownOpen(false)}
+                                  >
+                                    <CreditCard className="w-4 h-4 text-red-500" />
+                                    <span>Earnings</span>
+                                  </Link>
+                                )}
+                                
+                                <Link 
+                                  to="/dashboard/notifications" 
+                                  className="flex items-center space-x-3 px-4 py-3 hover:bg-red-50 transition-colors text-charcoal-700"
+                                  onClick={() => setIsUserDropdownOpen(false)}
+                                >
+                                  <Bell className="w-4 h-4 text-red-500" />
+                                  <span>Notifications</span>
+                                </Link>
+
+                                <div className="border-t border-red-100 my-2" />
+                                
+                                <button
+                                  onClick={handleLogout}
+                                  className="w-full flex items-center space-x-3 px-4 py-3 hover:bg-red-50 transition-colors text-red-500"
+                                >
+                                  <LogOut className="w-4 h-4" />
+                                  <span>Logout</span>
+                                </button>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     </>
                   ) : (
                     <div className="flex items-center space-x-3">
-                      <Link to="/login" className="btn-secondary border border-red-500 rounded-full text-sm">
+                      <Link to="/login" className="btn-secondary border border-red-500 rounded-full text-sm px-4 py-2 hover:bg-red-50 transition-colors">
                         Login
                       </Link>
                       <button 
                         onClick={handleBookEventClick}
-                        className="btn-primary bg-red-500 rounded-full text-sm"
+                        className="btn-primary bg-gradient-to-r from-red-500 to-red-600 text-white rounded-full text-sm px-4 py-2 hover:from-red-600 hover:to-red-700 transition-all shadow-lg shadow-red-500/25"
                       >
                         Get Started
                       </button>
@@ -247,15 +353,27 @@ const Navbar = () => {
                   
                   {/* Book Event / Get Started Button for Compact Nav */}
                   {isAuthenticated ? (
-                    <Link
-                      to="/events"
-                      className="bg-red-500 text-white px-3 py-2 rounded-full text-sm font-semibold hover:bg-red-600 transition-colors shadow-lg shadow-red-500/25"
-                    >
-                      Book Event
-                    </Link>
+                    <>
+                      {/* User Avatar for Compact Nav */}
+                      <button 
+                        className="p-1"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                      >
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold ${getUserColor(user?.name)}`}>
+                          {user?.name?.charAt(0).toUpperCase() || 'U'}
+                        </div>
+                      </button>
+                      
+                      <Link
+                        to="/events"
+                        className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-2 rounded-full text-sm font-semibold hover:from-red-600 hover:to-red-700 transition-all shadow-lg shadow-red-500/25"
+                      >
+                        Book Event
+                      </Link>
+                    </>
                   ) : (
                     <button
-                      className="bg-red-500 text-white px-3 py-2 rounded-full text-sm font-semibold hover:bg-red-600 transition-colors shadow-lg shadow-red-500/25"
+                      className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-2 rounded-full text-sm font-semibold hover:from-red-600 hover:to-red-700 transition-all shadow-lg shadow-red-500/25"
                       onClick={handleBookEventClick}
                     >
                       Get Started
@@ -308,14 +426,16 @@ const Navbar = () => {
                 <div className="relative space-y-3 z-10">
                   {isAuthenticated ? (
                     <>
-                      {/* User Info */}
+                      {/* User Info with Avatar */}
                       <div className="text-center mb-4 pb-4 border-b border-red-300/20">
-                        <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg shadow-red-500/25">
-                          <User className="w-6 h-6 text-white" />
+                        <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-3 ${getUserColor(user?.name)} shadow-lg`}>
+                          {user?.name?.charAt(0).toUpperCase() || 'U'}
                         </div>
-                        <p className="font-semibold text-red-900 text-lg">{user?.name}</p>
+                        <p className="font-bold text-red-900 text-lg">{user?.name}</p>
                         <p className="text-red-600 text-sm">{user?.email}</p>
-                        <p className="text-red-700 text-xs mt-1 capitalize font-medium">{user?.role}</p>
+                        <span className="inline-block mt-2 px-3 py-1 bg-red-300 text-white text-xs rounded-full capitalize">
+                          {user?.role}
+                        </span>
                       </div>
 
                       {/* Quick Actions Grid */}
@@ -324,7 +444,7 @@ const Navbar = () => {
                           <Link
                             key={action.label}
                             to={action.path}
-                            className="flex flex-col items-center p-3 rounded-xl hover:bg-red-500/20 transition-colors text-red-900 border border-red-200/50"
+                            className="flex flex-col items-center p-3 rounded-xl bg-gradient-to-b from-white to-red-50 hover:from-red-50 hover:to-red-100 transition-all text-red-900 border border-red-200 shadow-sm"
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
                             <action.icon className="w-5 h-5 mb-1" />
@@ -334,33 +454,44 @@ const Navbar = () => {
                       </div>
 
                       {/* Menu Items */}
-                      <Link
-                        to="/dashboard"
-                        className="flex items-center space-x-3 text-red-900 py-3 px-4 rounded-xl hover:bg-red-500/20 transition-colors border border-red-200/50"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <User className="w-5 h-5" />
-                        <span className="font-medium">Dashboard</span>
-                      </Link>
-                      
-                      {user?.role === 'host' && (
+                      <div className="space-y-2">
                         <Link
-                          to="/host"
-                          className="flex items-center space-x-3 text-red-900 py-3 px-4 rounded-xl hover:bg-red-500/20 transition-colors border border-red-200/50"
+                          to="/dashboard"
+                          className="flex items-center space-x-3 text-red-900 py-3 px-4 rounded-xl bg-gradient-to-r from-white to-red-50 hover:from-red-50 hover:to-red-100 transition-all border border-red-200"
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          <Calendar className="w-5 h-5" />
-                          <span className="font-medium">Host Dashboard</span>
+                          <User className="w-5 h-5" />
+                          <span className="font-medium">Dashboard</span>
                         </Link>
-                      )}
+                        
+                        <Link
+                          to="/dashboard/profile"
+                          className="flex items-center space-x-3 text-red-900 py-3 px-4 rounded-xl bg-gradient-to-r from-white to-red-50 hover:from-red-50 hover:to-red-100 transition-all border border-red-200"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <Settings className="w-5 h-5" />
+                          <span className="font-medium">Profile Settings</span>
+                        </Link>
+                        
+                        {user?.role === 'host' && (
+                          <Link
+                            to="/host"
+                            className="flex items-center space-x-3 text-red-900 py-3 px-4 rounded-xl bg-gradient-to-r from-white to-red-50 hover:from-red-50 hover:to-red-100 transition-all border border-red-200"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            <Calendar className="w-5 h-5" />
+                            <span className="font-medium">Host Dashboard</span>
+                          </Link>
+                        )}
+                      </div>
 
                       <div className="pt-3 border-t border-red-300/20">
                         <button
                           onClick={handleLogout}
-                          className="w-full flex items-center space-x-3 text-red-700 py-3 px-4 rounded-full hover:bg-red-500/20 transition-colors font-medium border border-red-200/50"
+                          className="w-full flex items-center justify-center space-x-3 text-white py-3 px-4 rounded-xl bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 transition-all shadow-lg shadow-red-500/25"
                         >
                           <LogOut className="w-5 h-5" />
-                          <span>Logout</span>
+                          <span className="font-medium">Logout</span>
                         </button>
                       </div>
                     </>
@@ -375,7 +506,7 @@ const Navbar = () => {
                       </Link>
                       <button
                         onClick={handleBookEventClick}
-                        className="w-full bg-red-500 text-white py-4 px-4 rounded-full hover:bg-red-600 transition-colors text-center font-semibold shadow-lg shadow-red-500/25"
+                        className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-4 px-4 rounded-full hover:from-red-600 hover:to-red-700 transition-all text-center font-semibold shadow-lg shadow-red-500/25"
                       >
                         Get Started
                       </button>
@@ -413,14 +544,15 @@ const Navbar = () => {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-white rounded-3xl p-8 max-w-sm w-full mx-auto"
+              className="bg-white rounded-3xl p-8 max-w-sm w-full mx-auto shadow-2xl border border-red-100"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
             >
               <div className="text-center mb-6">
+                
                 <h3 className="text-2xl font-display font-bold text-charcoal-900 mb-2">
-                  Get Started
+                  Welcome to PASA!
                 </h3>
                 <p className="text-charcoal-600">
                   Choose how you'd like to begin your event journey
@@ -430,7 +562,7 @@ const Navbar = () => {
               <div className="space-y-3">
                 {/* Sign Up Button */}
                 <button
-                  className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-4 px-6 rounded-full transition-all duration-200"
+                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-4 px-6 rounded-full transition-all duration-200 shadow-lg shadow-red-500/25"
                   onClick={handleSignUp}
                 >
                   Sign Up
@@ -438,7 +570,7 @@ const Navbar = () => {
 
                 {/* View Pricing Button */}
                 <button
-                  className="w-full border-2 border-red-500 text-red-500 hover:bg-red-50 font-semibold py-4 px-6 rounded-full transition-all duration-200"
+                  className="w-full border-2 border-red-500 text-red-500 hover:bg-red-50 hover:border-red-600 hover:text-red-600 font-semibold py-4 px-6 rounded-full transition-all duration-200"
                   onClick={handleViewPricing}
                 >
                   View Pricing
@@ -446,7 +578,7 @@ const Navbar = () => {
 
                 {/* Cancel Button */}
                 <button
-                  className="w-full text-charcoal-500 hover:text-charcoal-700 font-semibold py-3 px-6 rounded-full transition-all duration-200"
+                  className="w-full text-charcoal-500 hover:text-charcoal-700 font-semibold py-3 px-6 rounded-full transition-all duration-200 hover:bg-red-50"
                   onClick={handleCancel}
                 >
                   Cancel

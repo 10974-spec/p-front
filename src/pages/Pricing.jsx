@@ -32,7 +32,7 @@ const Pricing = () => {
     const { ticketPrice, ticketsSold, serviceFeeModel, serviceFeeValue, mpesaFeeMode } = calculatorData
     
     // Calculate total ticket revenue
-    const totalTicketRevenue = ticketPrice * ticketsSold
+    const totalTicketRevenue = ticketPrice * ticketsSold 
     
     // Calculate service fee (PASA revenue)
     let pasaEarnings = 0
@@ -52,7 +52,7 @@ const Pricing = () => {
     
     // Calculate host receives
     const hostReceivesPerTicket = ticketPrice - (mpesaFeeMode === 'pass-through' ? mpesaFeePerTransaction : 0)
-    const totalHostReceives = hostReceivesPerTicket * ticketsSold
+    const totalHostReceives = (hostReceivesPerTicket * ticketsSold) 
 
     return {
       buyerPaysPerTicket: Math.round(buyerPaysPerTicket),

@@ -4,7 +4,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../../store/slices/authSlice'
-import { Mail, Lock, User, Eye, EyeOff, Building, Phone, ChevronRight, ChevronLeft, Check } from 'lucide-react'
+import { 
+  Mail, Lock, User, Eye, EyeOff, Building, Phone, 
+  ChevronRight, ChevronLeft, Check, CreditCard, 
+  Banknote, Smartphone, Globe
+} from 'lucide-react'
 
 const Signup = () => {
   const [currentStep, setCurrentStep] = useState(1)
@@ -15,7 +19,12 @@ const Signup = () => {
     password: '',
     phone: '',
     role: 'buyer',
-    businessName: ''
+    businessName: '',
+    bankDetails: {
+      bankName: '',
+      accountNo: ''
+    },
+    mpesaNumber: ''
   })
   const [showPassword, setShowPassword] = useState(false)
   const dispatch = useDispatch()
@@ -27,14 +36,22 @@ const Signup = () => {
     { number: 2, title: 'Contact Details', field: 'email' },
     { number: 3, title: 'Security', field: 'password' },
     { number: 4, title: 'Role Selection', field: 'role' },
-    { number: 5, title: 'Complete', field: 'complete' }
+    { number: 5, title: 'Business Details', field: 'business' },
+    { number: 6, title: 'Complete', field: 'complete' }
   ]
 
   const handleChange = (e) => {
-    const newFormData = {
-      ...formData,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target
+    const newFormData = { ...formData }
+    
+    // Handle nested fields (bankDetails)
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.')
+      newFormData[parent] = { ...newFormData[parent], [child]: value }
+    } else {
+      newFormData[name] = value
     }
+    
     setFormData(newFormData)
     
     // Mark step as completed if valid
@@ -47,7 +64,6 @@ const Signup = () => {
 
   const nextStep = () => {
     if (currentStep < steps.length) {
-      // Mark current step as completed before moving
       if (isStepValid(currentStep)) {
         setCompletedSteps(prev => new Set([...prev, currentStep]))
       }
@@ -64,7 +80,20 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (currentStep === steps.length) {
-      const result = await dispatch(registerUser(formData))
+      // Prepare final data
+      const registrationData = {
+        ...formData,
+        // Only include business fields for hosts
+        ...(formData.role === 'host' ? {
+          businessName: formData.businessName,
+          bankDetails: formData.bankDetails.bankName && formData.bankDetails.accountNo 
+            ? formData.bankDetails 
+            : undefined,
+          mpesaNumber: formData.mpesaNumber || undefined
+        } : {})
+      }
+      
+      const result = await dispatch(registerUser(registrationData))
       if (result.type === 'auth/register/fulfilled') {
         navigate('/dashboard')
       }
@@ -83,12 +112,16 @@ const Signup = () => {
         return data.password.length >= 6
       case 4:
         return data.role
+      case 5:
+        if (data.role === 'host') {
+          return data.businessName.trim().length >= 2
+        }
+        return true
       default:
         return true
     }
   }
 
-  // Calculate progress percentage
   const progressPercentage = ((currentStep - 1) / (steps.length - 1)) * 100
 
   const getStepContent = () => {
@@ -299,30 +332,136 @@ const Signup = () => {
                 <Building className="w-6 h-6 text-charcoal-400 ml-4" />
               </label>
             </div>
+          </div>
+        )
 
-            {formData.role === 'host' && (
+      case 5:
+        return (
+          <div className="space-y-6">
+            <div className="text-center mb-4">
+              <h3 className="text-2xl font-display font-bold text-charcoal-900 mb-2">
+                Business Information
+              </h3>
+              <p className="text-charcoal-600">
+                {formData.role === 'host' 
+                  ? 'Tell us about your business' 
+                  : 'Additional information'}
+              </p>
+            </div>
+
+            <AnimatePresence>
+              {formData.role === 'host' && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="space-y-6"
+                >
+                  {/* Business Name */}
+                  <div>
+                    <label className="block text-sm font-medium text-charcoal-700 mb-2">
+                      Business/Organization Name *
+                    </label>
+                    <div className="relative">
+                      <Building className="absolute left-4 top-1/2 transform -translate-y-1/2 text-charcoal-400 w-5 h-5" />
+                      <input
+                        name="businessName"
+                        type="text"
+                        required
+                        value={formData.businessName}
+                        onChange={handleChange}
+                        className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                        placeholder="Enter business name"
+                        autoFocus
+                      />
+                    </div>
+                  </div>
+
+                  {/* Bank Details Section */}
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-charcoal-900 flex items-center">
+                      <Banknote className="w-5 h-5 mr-2" />
+                      Bank Details (Optional)
+                    </h4>
+                    
+                    <div className="relative">
+                      <CreditCard className="absolute left-4 top-1/2 transform -translate-y-1/2 text-charcoal-400 w-5 h-5" />
+                      <input
+                        name="bankDetails.bankName"
+                        type="text"
+                        value={formData.bankDetails.bankName}
+                        onChange={handleChange}
+                        className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                        placeholder="Bank Name (e.g., Equity Bank)"
+                      />
+                    </div>
+
+                    <div className="relative">
+                      <Globe className="absolute left-4 top-1/2 transform -translate-y-1/2 text-charcoal-400 w-5 h-5" />
+                      <input
+                        name="bankDetails.accountNo"
+                        type="text"
+                        value={formData.bankDetails.accountNo}
+                        onChange={handleChange}
+                        className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                        placeholder="Account Number"
+                      />
+                    </div>
+                  </div>
+
+                  {/* M-Pesa Number */}
+                  <div>
+                    <label className="block text-sm font-medium text-charcoal-700 mb-2">
+                      M-Pesa Number (Optional)
+                    </label>
+                    <div className="relative">
+                      <Smartphone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-charcoal-400 w-5 h-5" />
+                      <input
+                        name="mpesaNumber"
+                        type="tel"
+                        value={formData.mpesaNumber}
+                        onChange={handleChange}
+                        className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all"
+                        placeholder="+254 7XX XXX XXX"
+                      />
+                    </div>
+                    <p className="text-xs text-charcoal-500 mt-2">
+                      Used for mobile money transactions. Format: +254...
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+
+              {formData.role === 'buyer' && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center py-8"
+                >
+                  <Check className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                  <h4 className="text-xl font-semibold text-charcoal-900 mb-2">
+                    Almost there!
+                  </h4>
+                  <p className="text-charcoal-600">
+                    You're ready to explore amazing events
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {completedSteps.has(5) && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                className="overflow-hidden"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="flex justify-center"
               >
-                <div className="relative">
-                  <Building className="absolute left-4 top-1/2 transform -translate-y-1/2 text-charcoal-400 w-5 h-5" />
-                  <input
-                    name="businessName"
-                    type="text"
-                    value={formData.businessName}
-                    onChange={handleChange}
-                    className="w-full pl-12 pr-4 py-4 rounded-full border border-primary-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all text-lg"
-                    placeholder="Business/organization name"
-                  />
-                </div>
+                <Check className="w-8 h-8 text-red-500" />
               </motion.div>
             )}
           </div>
         )
 
-      case 5:
+      case 6:
         return (
           <div className="space-y-6">
             <div className="text-center mb-4">
@@ -337,8 +476,41 @@ const Signup = () => {
               </p>
             </div>
 
-            <div className="bg-red-50 rounded-2xl p-4">
-              <div className="text-sm text-red-800 text-center">
+            {/* Summary Card */}
+            <div className="bg-red-50 rounded-2xl p-6 border border-red-200">
+              <h4 className="font-semibold text-red-800 mb-4">Registration Summary:</h4>
+              <div className="space-y-3 text-sm text-red-700">
+                <div className="flex justify-between">
+                  <span>Name:</span>
+                  <span className="font-medium">{formData.name}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Email:</span>
+                  <span className="font-medium">{formData.email}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Role:</span>
+                  <span className="font-medium capitalize">{formData.role}</span>
+                </div>
+                
+                {formData.role === 'host' && formData.businessName && (
+                  <div className="flex justify-between">
+                    <span>Business:</span>
+                    <span className="font-medium">{formData.businessName}</span>
+                  </div>
+                )}
+                
+                {formData.phone && (
+                  <div className="flex justify-between">
+                    <span>Phone:</span>
+                    <span className="font-medium">{formData.phone}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 rounded-2xl p-4 border border-yellow-200">
+              <div className="text-sm text-yellow-800 text-center">
                 By creating an account, you agree to our{' '}
                 <Link to="/terms" className="font-semibold hover:underline">Terms</Link> and{' '}
                 <Link to="/privacy" className="font-semibold hover:underline">Privacy Policy</Link>
@@ -374,7 +546,7 @@ const Signup = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            PASA Events
+            Pasa Events
           </motion.h1>
           <motion.p 
             className="text-red-100 text-xl mt-4"

@@ -27,7 +27,7 @@ const Login = () => {
     e.preventDefault()
     const result = await dispatch(loginUser(formData))
     if (result.type === 'auth/login/fulfilled') {
-      navigate('/dashboard')
+      navigate('/events')
     }
   }
 
@@ -54,7 +54,7 @@ const Login = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            PASA Events
+            Pasa Events
           </motion.h1>
           <motion.p 
             className="text-red-100 text-xl mt-4"

@@ -592,14 +592,14 @@ const HostDashboard = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <Link to="/" className="flex items-center space-x-3">
+            {/* <Link to="/" className="flex items-center space-x-3">
               <img 
                 src="/src/assets/logo2.png" 
                 alt="PASA Logo" 
-                className="size-10" 
+                className="size-24" 
               />
-              <span className="font-bold text-gray-900 text-lg">PASA</span>
-            </Link>
+             
+            </Link> */}
           </motion.div>
         )}
 

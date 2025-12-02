@@ -92,7 +92,68 @@ const Home = () => {
       ],
       totalAttendees: 567,
       description: 'Taste culinary delights from around the world in this vibrant food celebration.'
-    }
+    },
+       {
+      id: 5,
+      slug: 'food-festival',
+      title: 'International Food Festival',
+      category: 'Food & Drink',
+      dateStart: '2024-10-05T12:00:00Z',
+      venue: { name: 'Waterfront Park' },
+      mainImage: '/src/assets/event1.jpeg',
+      ticketTiers: [
+        { name: 'Tasting Pass', price: 4500 },
+        { name: 'VIP Experience', price: 9000 }
+      ],
+      attendees: [
+        '/src/assets/avatar1.jpeg',
+        '/src/assets/avatar2.jpeg',
+        '/src/assets/avatar3.jpeg'
+      ],
+      totalAttendees: 567,
+      description: 'Taste culinary delights from around the world in this vibrant food celebration.'
+    },
+       {
+      id: 6,
+      slug: 'food-festival',
+      title: 'International Food Festival',
+      category: 'Food & Drink',
+      dateStart: '2024-10-05T12:00:00Z',
+      venue: { name: 'Waterfront Park' },
+      mainImage: '/src/assets/event2.jpeg',
+      ticketTiers: [
+        { name: 'Tasting Pass', price: 4500 },
+        { name: 'VIP Experience', price: 9000 }
+      ],
+      attendees: [
+        '/src/assets/avatar1.jpeg',
+        '/src/assets/avatar2.jpeg',
+        '/src/assets/avatar3.jpeg'
+      ],
+      totalAttendees: 567,
+      description: 'Taste culinary delights from around the world in this vibrant food celebration.'
+    },
+       {
+      id: 7,
+      slug: 'food-festival',
+      title: 'International Food Festival',
+      category: 'Food & Drink',
+      dateStart: '2024-10-05T12:00:00Z',
+      venue: { name: 'Waterfront Park' },
+      mainImage: '/src/assets/event3.jpeg',
+      ticketTiers: [
+        { name: 'Tasting Pass', price: 4500 },
+        { name: 'VIP Experience', price: 9000 }
+      ],
+      attendees: [
+        '/src/assets/avatar1.jpeg',
+        '/src/assets/avatar2.jpeg',
+        '/src/assets/avatar3.jpeg'
+      ],
+      totalAttendees: 567,
+      description: 'Taste culinary delights from around the world in this vibrant food celebration.'
+    },
+    
   ]
 
   const features = [
@@ -509,11 +570,11 @@ const Home = () => {
                         {featuredEvents[0].title}
                       </h3>
                       <div className="flex items-center gap-6 mb-4 text-lg flex-wrap">
-                        <div className="flex items-center gap-2 bg-black/30 px-3 py-1 rounded-full">
+                        <div className="flex items-center gap-2 glass px-3 py-1 rounded-full">
                           <Calendar className="w-5 h-5" />
                           <span>{new Date(featuredEvents[0].dateStart).toLocaleDateString()}</span>
                         </div>
-                        <div className="flex items-center gap-2 bg-black/30 px-3 py-1 rounded-full">
+                        <div className="flex items-center gap-2 glass px-3 py-1 rounded-full">
                           <MapPin className="w-5 h-5" />
                           <span>{featuredEvents[0].venue.name}</span>
                         </div>
@@ -537,7 +598,7 @@ const Home = () => {
               </motion.div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {featuredEvents.slice(1, 4).map((event, index) => (
+                {featuredEvents.slice(1, 7).map((event, index) => (
                   <motion.div
                     key={event.id}
                     className="group relative cursor-pointer"
@@ -683,13 +744,13 @@ const Home = () => {
             onClick={handleCloseModal}
           >
             <motion.div
-              className="bg-white rounded-3xl max-w-md w-full overflow-hidden"
+              className="glass rounded-3xl max-w-md w-full overflow-hidden"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative h-48">
+              <div className="relative h-48 rounded-full">
                 <img
                   src={selectedEvent.mainImage}
                   alt={selectedEvent.title}
@@ -704,7 +765,7 @@ const Home = () => {
               </div>
 
               <div className="p-6">
-                <h3 className="text-2xl font-display font-bold text-charcoal-900 mb-3">
+                <h3 className="text-2xl font-display p-4 rounded-full bg-red-500 font-bold text-center text-white mb-3">
                   {selectedEvent.title}
                 </h3>
                 
