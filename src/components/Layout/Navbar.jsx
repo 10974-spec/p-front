@@ -221,12 +221,12 @@ const Navbar = () => {
                               {/* Menu Items */}
                               <div className="py-2">
                                 <Link 
-                                  to="/dashboard" 
+                                  to="/dashboard/tickets" 
                                   className="flex items-center space-x-3 px-4 py-3 hover:bg-red-50 transition-colors text-charcoal-700"
                                   onClick={() => setIsUserDropdownOpen(false)}
                                 >
                                   <User className="w-4 h-4 text-red-500" />
-                                  <span>Dashboard</span>
+                                  <span>My Tickets</span>
                                 </Link>
                                 
                                 <Link 
