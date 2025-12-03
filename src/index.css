@@ -58,11 +58,11 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-accent-400 rounded-full;
+  @apply bg-red-500 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-accent-500;
+  @apply bg-red-500;
 }
 
 /* Add to src/index.css */

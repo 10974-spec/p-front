@@ -49,7 +49,7 @@ const Tickets = () => {
         date: '2024-08-20T09:00:00Z',
         venue: 'Convention Center, Mombasa',
         location: 'Mombasa, Kenya',
-        image: 'https://images.unsplash.com/photo-1540575467063-178a50c7dfce?w=800&h=600&fit=crop',
+        image: '/src/assets/event1.jpeg',
         category: 'Technology',
         description: 'Annual tech conference featuring industry leaders and innovation showcases.',
         organizer: 'Tech Summit Org',
@@ -152,7 +152,7 @@ const Tickets = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-red-50 pt-40 pb-8">
+    <div className="min-h-screen bg-white pt-40 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <motion.div
@@ -161,18 +161,18 @@ const Tickets = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-xl shadow-red-500/30 mb-6">
+          {/* <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-xl shadow-red-500/30 mb-6">
             <Ticket className="w-10 h-10 text-white" />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent mb-4">
+          </div> */}
+          {/* <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent mb-4">
             My Tickets
           </h1>
           <p className="text-xl text-charcoal-600 max-w-2xl mx-auto">
             All your event tickets, organized and ready for your next adventure
-          </p>
+          </p> */}
           
           {/* Stats Cards */}
-          <div className="flex flex-wrap justify-center gap-4 mt-8">
+          {/* <div className="flex flex-wrap justify-center gap-4 mt-8">
             <div className="bg-white rounded-2xl p-4 shadow-lg border border-red-100 min-w-[140px]">
               <div className="text-2xl font-bold text-red-500 mb-1">{tickets.length}</div>
               <div className="text-sm text-charcoal-500">Total Tickets</div>
@@ -185,7 +185,7 @@ const Tickets = () => {
               <div className="text-2xl font-bold text-red-500 mb-1">{pastTickets.length}</div>
               <div className="text-sm text-charcoal-500">Past Events</div>
             </div>
-          </div>
+          </div> */}
         </motion.div>
 
         {/* Main Content */}

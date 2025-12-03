@@ -326,8 +326,21 @@ const Home = () => {
        
       {/* Hero Section */}
       <section className=" relative min-h-screen flex items-center justify-center px-6 pt-12 lg:pt-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-100 via-primary-50 to-accent-50" />
-        
+             <div className="absolute inset-0">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/src/assets/bgsimple.png')"
+            }}
+          />
+          
+          {/* Gradient Overlay - Fades towards bottom left */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-white via-white/80 to-transparent" />
+          
+          {/* Additional subtle gradient for depth */}
+          <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white/90 via-white/50 to-transparent" />
+        </div>
         {/* Mobile Carousel */}
         <div className="lg:hidden w-full max-w-4xl relative z-10">
           <div className="relative h-[75vh] flex items-center justify-center">
