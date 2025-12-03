@@ -478,11 +478,7 @@ const Home = () => {
             Create, share, and sell tickets —{' '}
             <span className="text-red-500">all in one link.</span>
           </motion.h1>
-              <img 
-            src="/src/assets/bg1.png" 
-            alt="PASA Logo" 
-            className="size-24 absolute right-0 z-40 top-60 opacity-75 " 
-          />
+        
           
           <motion.p
             className="text-xl md:text-2xl text-charcoal-600 mb-8 leading-relaxed"
@@ -666,6 +662,8 @@ const Home = () => {
             </motion.div>
           </div>
         </section>
+
+        
 
         <section className="py-16 px-6 bg-primary-50">
           <div className="max-w-6xl mx-auto">
